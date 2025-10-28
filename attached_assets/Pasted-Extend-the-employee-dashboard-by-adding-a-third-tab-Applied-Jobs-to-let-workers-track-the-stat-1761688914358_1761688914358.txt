@@ -1,0 +1,140 @@
+Extend the employee dashboard by adding a third tab — “Applied Jobs” — to let workers track the status of all jobs they’ve applied for.
+Also update the job cards on the Home tab so that once a worker applies, the “Apply Now” button changes to “Applied” and becomes inactive.
+
+🧭 Page Structure
+🔹 Top Navigation Tabs
+
+Keep the three tabs fixed at the top for easy navigation:
+
+Home — Browse available jobs
+
+Profile — View personal and verification details
+
+Applied Jobs — Track application statuses
+
+Active tab should remain highlighted with the primary accent color.
+
+🏠 Tab 1: Home (Updated Job Feed Page)
+
+Show job cards with Apply Now button.
+
+Once the user clicks Apply Now:
+
+Show popup:
+
+Title: “Application Received!”
+
+Body: “Our team will get back to you soon with next steps for this job.”
+
+Button: “Okay, Got It” → closes popup.
+
+Change the “Apply Now” button on that job card to:
+
+Text: “Applied”
+
+Style: Greyed-out, non-clickable.
+
+Automatically add that job to the Applied Jobs tab list (placeholder logic allowed).
+
+👤 Tab 2: Profile
+
+(Same as Prompt 3)
+Show full profile details, verification status, and training/certification progress.
+
+💼 Tab 3: Applied Jobs (New Tab)
+
+Title: “My Applied Jobs”
+
+Display a list of all jobs the worker has applied to, with their current status clearly shown.
+
+Each Applied Job Card includes:
+
+Restaurant / Brand Name
+
+Role Title
+
+Pay Rate
+
+Shift Timing
+
+Location
+
+Application Status (with color-coded badges)
+
+Example Job Cards:
+
+🍔 McDonald’s India
+
+Role: Waiter
+
+Pay: ₹12,000/month
+
+Shift: Morning (9am–5pm)
+
+Status: 🕓 Under Review (yellow badge)
+
+☕ Café Coffee Day
+
+Role: Barista
+
+Pay: ₹14,000/month
+
+Shift: Evening (2pm–10pm)
+
+Status: ❌ Rejected (red badge)
+
+🍕 Domino’s Pizza
+
+Role: Kitchen Helper
+
+Pay: ₹11,500/month
+
+Shift: Morning (9am–5pm)
+
+Status: 📅 Interview on 1st Nov (blue badge)
+
+🥪 Subway India
+
+Role: Cashier
+
+Pay: ₹13,000/month
+
+Shift: Flexible
+
+Status: ✅ Selected (green badge)
+
+Each card should be visually distinct with a colored border or tag indicating the job status.
+
+⚙️ Technical & UI Notes
+
+When user applies → store job in local state or placeholder array (appliedJobs).
+
+“Applied” button state should persist across sessions (placeholder acceptable).
+
+Filter or sort applied jobs by status (optional future feature).
+
+Responsive for mobile and desktop.
+
+Smooth transitions between tabs and popups.
+
+Placeholder hooks for backend logic:
+
+applyForJob(jobId)
+
+getAppliedJobs()
+
+updateJobStatus(jobId, status)
+
+✅ Output Expectation
+
+Generate a fully functional frontend page with:
+
+Three tabs: Home, Profile, and Applied Jobs
+
+“Apply Now” → “Applied” button state change
+
+“Applied Jobs” tab listing all applications with varied statuses
+
+Interactive popups and smooth UI transitions
+
+Clean, easy-to-use design for semi-skilled workers

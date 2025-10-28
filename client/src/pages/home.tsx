@@ -4,6 +4,7 @@ import JobFilters, { type FilterState } from "@/components/JobFilters";
 import JobCard, { type Job } from "@/components/JobCard";
 import ProfileView from "@/components/ProfileView";
 import ApplicationModal from "@/components/ApplicationModal";
+import AppliedJobCard, { type AppliedJob, type ApplicationStatus } from "@/components/AppliedJobCard";
 
 const MOCK_JOBS: Job[] = [
   {
@@ -74,10 +75,17 @@ const MOCK_PROFILE = {
   certificationStatus: 'pending' as const,
 };
 
+const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled", "selected"];
+
+function getRandomStatus(): ApplicationStatus {
+  return STATUSES[Math.floor(Math.random() * STATUSES.length)];
+}
+
 export default function HomePage() {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(MOCK_JOBS);
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [appliedJobs, setAppliedJobs] = useState<AppliedJob[]>([]);
 
   const handleApplyFilters = (filters: FilterState) => {
     console.log("Applying filters:", filters);
@@ -104,9 +112,34 @@ export default function HomePage() {
 
   const handleApplyJob = (jobId: string) => {
     const job = MOCK_JOBS.find(j => j.id === jobId);
-    setSelectedJob(job || null);
+    if (!job) return;
+
+    const alreadyApplied = appliedJobs.some(aj => aj.id === jobId);
+    if (alreadyApplied) return;
+
+    setSelectedJob(job);
     setApplicationModalOpen(true);
     console.log("Applying for job:", jobId);
+  };
+
+  const handleModalClose = () => {
+    if (selectedJob) {
+      const status = getRandomStatus();
+      const appliedJob: AppliedJob = {
+        ...selectedJob,
+        status,
+        interviewDate: status === "interview_scheduled" ? "1st Nov" : undefined,
+      };
+      
+      setAppliedJobs(prev => [appliedJob, ...prev]);
+    }
+    
+    setApplicationModalOpen(false);
+    setSelectedJob(null);
+  };
+
+  const isJobApplied = (jobId: string) => {
+    return appliedJobs.some(aj => aj.id === jobId);
   };
 
   return (
@@ -114,7 +147,7 @@ export default function HomePage() {
       <div className="border-b sticky top-0 bg-background z-10">
         <div className="max-w-7xl mx-auto px-4">
           <Tabs defaultValue="home" className="w-full">
-            <TabsList className="w-full h-14 grid grid-cols-2 max-w-md mx-auto" data-testid="tabs-navigation">
+            <TabsList className="w-full h-14 grid grid-cols-3 max-w-2xl mx-auto" data-testid="tabs-navigation">
               <TabsTrigger 
                 value="home" 
                 className="h-12 text-base"
@@ -128,6 +161,13 @@ export default function HomePage() {
                 data-testid="tab-profile"
               >
                 Profile
+              </TabsTrigger>
+              <TabsTrigger 
+                value="applied" 
+                className="h-12 text-base"
+                data-testid="tab-applied-jobs"
+              >
+                Applied Jobs
               </TabsTrigger>
             </TabsList>
 
@@ -152,7 +192,12 @@ export default function HomePage() {
                     <div className="space-y-4" data-testid="job-listings">
                       {filteredJobs.length > 0 ? (
                         filteredJobs.map((job) => (
-                          <JobCard key={job.id} job={job} onApply={handleApplyJob} />
+                          <JobCard 
+                            key={job.id} 
+                            job={job} 
+                            onApply={handleApplyJob}
+                            isApplied={isJobApplied(job.id)}
+                          />
                         ))
                       ) : (
                         <div className="text-center py-12">
@@ -173,13 +218,44 @@ export default function HomePage() {
                 </div>
               </div>
             </TabsContent>
+
+            <TabsContent value="applied" className="mt-0">
+              <div className="py-8">
+                <div className="max-w-4xl mx-auto">
+                  <div className="mb-8">
+                    <h1 className="text-3xl font-bold mb-2">My Applied Jobs</h1>
+                    <p className="text-muted-foreground">
+                      Track the status of your job applications
+                    </p>
+                  </div>
+
+                  {appliedJobs.length > 0 ? (
+                    <div className="space-y-4" data-testid="applied-jobs-list">
+                      {appliedJobs.map((job) => (
+                        <AppliedJobCard key={job.id} job={job} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-16">
+                      <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span className="text-4xl">📋</span>
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2">No Applications Yet</h3>
+                      <p className="text-muted-foreground mb-6">
+                        Start applying to jobs from the Home tab to see them here
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </TabsContent>
           </Tabs>
         </div>
       </div>
 
       <ApplicationModal
         isOpen={applicationModalOpen}
-        onClose={() => setApplicationModalOpen(false)}
+        onClose={handleModalClose}
         jobTitle={selectedJob ? `${selectedJob.role} at ${selectedJob.restaurantName}` : undefined}
       />
     </div>

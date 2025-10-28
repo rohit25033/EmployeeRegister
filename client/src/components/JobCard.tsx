@@ -15,9 +15,10 @@ export interface Job {
 interface JobCardProps {
   job: Job;
   onApply: (jobId: string) => void;
+  isApplied?: boolean;
 }
 
-export default function JobCard({ job, onApply }: JobCardProps) {
+export default function JobCard({ job, onApply, isApplied = false }: JobCardProps) {
   return (
     <Card className="p-6 hover-elevate" data-testid={`job-card-${job.id}`}>
       <div className="flex items-start gap-4">
@@ -54,9 +55,11 @@ export default function JobCard({ job, onApply }: JobCardProps) {
           <Button 
             className="w-full h-11"
             onClick={() => onApply(job.id)}
+            disabled={isApplied}
+            variant={isApplied ? "secondary" : "default"}
             data-testid={`button-apply-${job.id}`}
           >
-            Apply Now
+            {isApplied ? "Applied" : "Apply Now"}
           </Button>
         </div>
       </div>
