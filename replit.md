@@ -6,18 +6,36 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
 
 ## Recent Changes (October 28, 2025)
 
+### Employee Dashboard Feature (Tab 4)
+- **Conditional Dashboard Tab**: Appears automatically when a worker is selected for a job (status = "selected")
+- **Four Sub-tabs**: Calendar, Attendance, Documents, and Monthly Payslips for complete employee management
+- **Calendar & Attendance Overview**: 
+  - Displays days worked (24) with 92.3% attendance rate
+  - Visual 7-day grid showing present (✅) and absent (❌ marks
+  - Motivational messaging for consistent attendance
+- **Milestones Tracker**: 
+  - Four career milestones: Onboarding (✅ completed), 6 Months, 1 Year, 2 Years
+  - Special reward cue card for 6-month milestone (₹1,000 Amazon voucher)
+  - Timeline visualization with status-based styling
+- **Attendance Section**: Summary cards showing days worked (24), days absent (2), and attendance percentage with progress bar
+- **Documents Section**: Upload/view system for Aadhaar, PAN, ID Proof, Offer Letter, and Employment Contract
+- **Payslips Section**: Monthly payslip history with download capability (October-July 2025)
+- **Job Summary Sidebar**: Quick snapshot of current role, employer, pay rate, shift timing, and joining date
+
 ### Applied Jobs Feature (Tab 3)
 - Added third tab "Applied Jobs" to track application statuses with color-coded badges
+- **Two-column grid layout** for applied jobs display (improved visual organization)
 - Implemented state management for applied jobs tracking
 - Button state changes: "Apply Now" → "Applied" (disabled) after submission
-- Four application statuses supported: Under Review, Rejected, Interview Scheduled, Selected
+- **Sequential status assignment**: Guarantees all 4 statuses appear (under_review → rejected → interview_scheduled → selected)
+- Four application statuses supported: Under Review (yellow), Rejected (red), Interview Scheduled (blue with date), Selected (green)
 - Empty state UI when no applications exist
 - Jobs automatically added to Applied Jobs list upon modal confirmation
 
 ### Job Application Flow Enhancement
 - Updated JobCard component to support applied state with `isApplied` prop
 - Modal confirmation triggers job addition to applied list
-- Random status assignment for demo purposes (ready for backend integration)
+- Sequential status assignment ensures first 4 applications show all statuses
 - Visual feedback with greyed-out secondary variant for applied jobs
 
 ## User Preferences
