@@ -1,11 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface SuccessConfirmationProps {
   onGoToDashboard?: () => void;
 }
 
 export default function SuccessConfirmation({ onGoToDashboard }: SuccessConfirmationProps) {
+  const [, setLocation] = useLocation();
+
+  const handleGoToDashboard = () => {
+    if (onGoToDashboard) {
+      onGoToDashboard();
+    } else {
+      setLocation("/dashboard");
+    }
+  };
+
   return (
     <div className="text-center max-w-md mx-auto py-12" data-testid="success-confirmation">
       <div className="mb-8">
@@ -37,10 +48,7 @@ export default function SuccessConfirmation({ onGoToDashboard }: SuccessConfirma
 
         <Button 
           className="h-12 px-8 w-full" 
-          onClick={() => {
-            console.log("Navigate to dashboard");
-            onGoToDashboard?.();
-          }}
+          onClick={handleGoToDashboard}
           data-testid="button-dashboard"
         >
           Go to Dashboard

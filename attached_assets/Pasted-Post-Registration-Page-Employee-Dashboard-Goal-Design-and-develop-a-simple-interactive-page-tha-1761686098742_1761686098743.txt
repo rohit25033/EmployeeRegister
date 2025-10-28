@@ -1,0 +1,86 @@
+Post-Registration Page (Employee Dashboard)
+
+Goal:
+Design and develop a simple, interactive page that appears right after an employee successfully registers.
+This page encourages the worker to complete training and certification to unlock verified, higher-paying jobs.
+
+Design & Layout
+
+Clean, minimal, mobile-friendly interface.
+
+Use friendly illustrations or icons beside each step (training and certification).
+
+Soft colors (light grey background, white cards, blue/orange primary accent).
+
+Page title at top: “Next Steps to Boost Your Profile”
+
+Page Structure
+✅ Section 1: Progress Headings / Checklist Boxes
+
+Two inactive checklist boxes (greyed out, not clickable):
+
+Complete Training
+
+Complete Certification
+
+Each box should have:
+
+A small progress indicator (circle or tick icon, grey when incomplete).
+
+A short subtext:
+
+For Training: “Get trained and verified to become job-ready.”
+
+For Certification: “Earn official badges to access top-paying QSR roles.”
+
+(These boxes should visually appear as “locked” or inactive — e.g., faded or with a small lock icon.)
+
+Section 2: Action Buttons
+
+Two primary buttons placed below the checklist boxes:
+
+🟧 Get Training
+
+🟦 Get Certificate
+
+Buttons should be styled prominently, full-width, rounded edges, large text.
+
+On Click → Popup / Modal
+
+When the user clicks either button, show a modal popup (centered on screen) with the following content:
+
+Popup Title:
+
+“We’ll Get in Touch!”
+
+Popup Body:
+
+“Our representative will contact you shortly to help you with your training or certification process.
+
+Verification is optional, but completing it helps you get higher-paying and priority job matches.”
+
+Popup Buttons:
+
+“Okay, Got it” → closes the popup.
+
+(Ensure the popup has smooth fade-in and fade-out animation.)
+
+Technical & UI Notes
+
+Include smooth transitions between register success → this page.
+
+Use icons or subtle illustrations (like a training cap and certificate badge).
+
+Make the two checklist boxes dynamically updatable later (to turn active when tasks complete).
+
+Keep all text simple and conversational for semi-skilled workers.
+
+Output Expectation
+
+Generate a fully functional frontend page for this post-registration state with:
+
+Clean UI/UX
+
+Interactive modals for buttons
+
+Placeholder functions for “marking training/certification complete” in the future.
