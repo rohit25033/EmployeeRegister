@@ -52,6 +52,41 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
 - Sequential status assignment ensures first 4 applications show all statuses
 - Visual feedback with greyed-out secondary variant for applied jobs
 
+### QSR/Franchisee Registration Flow (Business Accounts)
+- **Two-Step Registration Process**: OTP verification → Comprehensive registration form
+- **Step 1 - OTP Verification** (`/qsr-register`):
+  - Phone number input with 10-digit validation
+  - Mock OTP generation and verification (displays "123456" in console for testing)
+  - 6-digit OTP input using InputOTP component
+  - Currently accepts any 6-digit code (ready for Twilio integration)
+  - Successful verification redirects to registration page with phone number in query params
+- **Step 2 - Registration Form** (`/qsr-registration?phone=<number>`):
+  - **Tabbed Interface**: Separate forms for QSR Registration and Franchisee Owner Registration
+  - **QSR Registration Tab**: 4-section comprehensive form
+    - Section 1: Basic Information (restaurant name, POC details, address, city/state/pincode)
+    - Section 2: Business Details (FSSAI license, GST number, PAN, registration number)
+    - Section 3: Document Uploads (5 business documents - currently optional for testing)
+    - Section 4: Agreement & Consent (2 required checkbox confirmations)
+  - **Franchisee Owner Tab**: Simplified initial form
+    - Basic business information and POC details
+    - Address fields (auto-filled contact number from OTP step)
+    - Note about additional details requested later
+  - **Form Features**:
+    - React Hook Form with Zod validation
+    - Phone number auto-filled and read-only (carried from OTP verification)
+    - File upload inputs (mock implementation - ready for object storage integration)
+    - Success toast notification on submission
+    - Auto-redirect to landing page after successful submission
+- **Database Schemas**:
+  - `qsrRegistrations` table: All business details, documents (nullable), consent fields, status tracking
+  - `franchiseeRegistrations` table: Core business info, POC details, address, status tracking
+  - Both use UUID primary keys with pending status by default
+- **Integration Points**:
+  - Twilio OTP integration prepared (currently using mock verification)
+  - File upload system ready for object storage backend
+  - Backend API routes pending for form submission and data persistence
+  - Insert schemas exported from shared/schema.ts for type-safe backend integration
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
