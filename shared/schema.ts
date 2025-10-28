@@ -94,3 +94,75 @@ export const insertFranchiseeRegistrationSchema = createInsertSchema(franchiseeR
 
 export type InsertFranchiseeRegistration = z.infer<typeof insertFranchiseeRegistrationSchema>;
 export type FranchiseeRegistration = typeof franchiseeRegistrations.$inferSelect;
+
+// Job Postings Schema
+export const jobPostings = pgTable("job_postings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  qsrId: varchar("qsr_id").notNull(),
+  role: text("role").notNull(),
+  location: text("location").notNull(),
+  description: text("description").notNull(),
+  salaryMin: integer("salary_min").notNull(),
+  salaryMax: integer("salary_max").notNull(),
+  urgency: text("urgency").notNull(),
+  shiftType: text("shift_type").notNull(),
+  numberOfOpenings: integer("number_of_openings").notNull(),
+  postedOn: text("posted_on").notNull(),
+  status: text("status").notNull().default("active"),
+});
+
+export const insertJobPostingSchema = createInsertSchema(jobPostings).omit({
+  id: true,
+  postedOn: true,
+  status: true,
+});
+
+export type InsertJobPosting = z.infer<typeof insertJobPostingSchema>;
+export type JobPosting = typeof jobPostings.$inferSelect;
+
+// Job Applications Schema
+export const jobApplications = pgTable("job_applications", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  jobId: varchar("job_id").notNull(),
+  applicantId: varchar("applicant_id").notNull(),
+  applicantName: text("applicant_name").notNull(),
+  applicantEmail: text("applicant_email"),
+  applicantPhone: text("applicant_phone").notNull(),
+  experience: text("experience"),
+  skills: text("skills").array(),
+  location: text("location"),
+  appliedOn: text("applied_on").notNull(),
+  status: text("status").notNull().default("pending"),
+});
+
+export const insertJobApplicationSchema = createInsertSchema(jobApplications).omit({
+  id: true,
+  appliedOn: true,
+  status: true,
+});
+
+export type InsertJobApplication = z.infer<typeof insertJobApplicationSchema>;
+export type JobApplication = typeof jobApplications.$inferSelect;
+
+// Scheduled Calls Schema
+export const scheduledCalls = pgTable("scheduled_calls", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  qsrId: varchar("qsr_id").notNull(),
+  applicantId: varchar("applicant_id").notNull(),
+  applicantName: text("applicant_name").notNull(),
+  jobId: varchar("job_id").notNull(),
+  jobRole: text("job_role").notNull(),
+  scheduledDate: text("scheduled_date").notNull(),
+  scheduledTime: text("scheduled_time").notNull(),
+  status: text("status").notNull().default("scheduled"),
+  createdOn: text("created_on").notNull(),
+});
+
+export const insertScheduledCallSchema = createInsertSchema(scheduledCalls).omit({
+  id: true,
+  createdOn: true,
+  status: true,
+});
+
+export type InsertScheduledCall = z.infer<typeof insertScheduledCallSchema>;
+export type ScheduledCall = typeof scheduledCalls.$inferSelect;

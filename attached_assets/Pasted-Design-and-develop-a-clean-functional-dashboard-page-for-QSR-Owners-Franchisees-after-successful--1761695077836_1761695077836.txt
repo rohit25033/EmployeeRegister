@@ -1,0 +1,189 @@
+Design and develop a clean, functional dashboard page for QSR Owners / Franchisees after successful registration and verification on Rozagaar Hub.
+
+This dashboard allows owners to manage job listings, track applications, and view their profile — all in one interface.
+
+🧭 Page Layout Overview
+Header Section
+
+At the top-left:
+
+Greeting text: “Hi, McD!” (Dynamically change based on logged-in business name)
+
+At the top-right:
+
+Two icon-based tabs:
+
+🧾 Listings
+
+👤 Profile
+
+Both tabs should be clearly visible and switchable.
+Active tab should be highlighted (colored underline or filled icon).
+
+🏠 Dashboard Main Area (Listings Tab Default View)
+Primary CTA Section (Top Bar)
+
+Right below the header:
+
+CTA Button: 🟧 Post Job
+
+Beside it:
+
+Tag: “25 Applications Received” (shows total applications count)
+
+Recent Updates Section
+
+Below the top bar, add a Recent Updates panel.
+
+Title: “Recent Job Applications”
+Show 2–3 most recent applicants (short summary cards):
+Example:
+
+👷‍♂️ Rahul Verma applied for Waiter - McD Indiranagar
+🕒 2 hours ago
+
+🍳 Sneha Rao applied for Kitchen Staff - McD Koramangala
+🕒 1 day ago
+
+
+Each should have a “View Profile” button for quick access.
+
+➕ Post Job Modal (On Clicking “Post Job”)
+
+Popup Modal Title: “Post a New Job”
+
+Fields:
+
+Role (Dropdown — Waiter, Cashier, Kitchen Staff, Cleaner, Delivery Executive, etc.)
+
+Location (Text input)
+
+Job Description (Textarea)
+
+Salary Range (Min–Max)
+
+Urgency (Radio buttons: High / Low)
+
+Shift Type (Morning, Evening, Night, Flexible)
+
+Number of Openings (Numeric input)
+
+Buttons:
+
+“Post Job” (Primary CTA)
+
+“Cancel” (Secondary)
+
+✅ On clicking “Post Job”:
+
+Modal closes with success animation.
+
+New job appears under Listings tab.
+
+📋 Listings Tab
+
+Displays all active and past job listings in card view or table layout.
+
+Each Job Card / Row shows:
+
+Role
+
+Location
+
+Salary Range
+
+Urgency (colored tag — red for high, grey for low)
+
+Applications Received count (e.g., “12 Applications”)
+
+Posted On date
+
+“View Applicants” button
+
+🧍 View Applicants (On Clicking a Job)
+
+Opens a panel or modal showing list of candidates who applied for that specific job.
+
+Each Candidate Card includes:
+
+Candidate Name
+
+Role Applied For
+
+Short Summary (Experience, Skills, Location)
+
+Buttons:
+
+“View Profile”
+
+“Schedule a Call”
+
+📅 Schedule a Call (On Clicking “Schedule a Call”)
+
+Open a calendar popup modal:
+
+Title: “Schedule a Call with [Candidate Name]”
+
+Calendar date picker
+
+Time slot selector
+
+Confirmation button: “Confirm Call”
+
+After confirmation:
+
+Modal closes with success message:
+
+“✅ Call scheduled successfully. You’ll be notified via email.”
+
+👤 Profile Tab (For QSR / Franchisee Owner)
+
+Show all details entered during registration:
+
+Business Name, Contact Info, Address
+
+Type: Company-Owned / Franchise-Operated
+
+GST, FSSAI, and Registration Numbers
+
+Uploaded Documents (view/download buttons)
+
+Status: Verification Complete ✅ or Pending ⏳
+
+⚙️ Technical & UI Notes
+
+Responsive and mobile-friendly layout
+
+Reuse the orange/blue accent palette from Rozagaar Hub branding
+
+Smooth tab transitions and modal animations
+
+Placeholder backend functions:
+
+postJob()
+
+fetchListings()
+
+fetchApplicants(jobId)
+
+scheduleCall(candidateId)
+
+All CTAs should have loading states and confirmation toasts.
+
+✅ Output Expectation
+
+Generate a fully functional frontend page for the QSR Owner Home Dashboard with:
+
+Greeting and profile tabs
+
+Post Job modal with input validations
+
+Recent updates section
+
+Listings view with application counts
+
+Applicant list and schedule call functionality
+
+Profile tab for business details
+
+Clean and simple UI/UX, suitable for professional restaurant operators
