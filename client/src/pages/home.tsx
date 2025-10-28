@@ -75,7 +75,7 @@ const MOCK_PROFILE = {
   certificationStatus: 'pending' as const,
 };
 
-const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled"];
+const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled", "selected"];
 
 function getRandomStatus(): ApplicationStatus {
   return STATUSES[Math.floor(Math.random() * STATUSES.length)];
