@@ -75,7 +75,7 @@ const MOCK_PROFILE = {
   certificationStatus: 'pending' as const,
 };
 
-const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled", "selected"];
+const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled"];
 
 function getRandomStatus(): ApplicationStatus {
   return STATUSES[Math.floor(Math.random() * STATUSES.length)];
@@ -221,7 +221,7 @@ export default function HomePage() {
 
             <TabsContent value="applied" className="mt-0">
               <div className="py-8">
-                <div className="max-w-4xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                   <div className="mb-8">
                     <h1 className="text-3xl font-bold mb-2">My Applied Jobs</h1>
                     <p className="text-muted-foreground">
@@ -230,7 +230,7 @@ export default function HomePage() {
                   </div>
 
                   {appliedJobs.length > 0 ? (
-                    <div className="space-y-4" data-testid="applied-jobs-list">
+                    <div className="grid grid-cols-2 gap-6" data-testid="applied-jobs-list">
                       {appliedJobs.map((job) => (
                         <AppliedJobCard key={job.id} job={job} />
                       ))}
