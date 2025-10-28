@@ -87,6 +87,47 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
   - Backend API routes pending for form submission and data persistence
   - Insert schemas exported from shared/schema.ts for type-safe backend integration
 
+### QSR Owner Dashboard (Business Account Management)
+- **Full-Featured Dashboard** (`/qsr-dashboard`): Complete job management and applicant tracking system
+- **Header Section**:
+  - Dynamic greeting ("Hi, McD!") based on logged-in business
+  - Icon-based tab navigation: Listings (default) and Profile
+  - Clean, professional layout with active tab highlighting
+- **Listings Tab**:
+  - **Top Bar**: Post Job CTA button + Applications received counter badge
+  - **Recent Updates Section**: Shows 2-3 most recent applicants with skills badges and "View Profile" buttons
+  - **Job Listings Grid**: Two-column layout displaying active jobs with:
+    - Role, location, salary range, urgency badge (high=red, low=grey)
+    - Shift type, number of openings, posted date
+    - Applications count and "View Applicants" button
+- **Post Job Modal**:
+  - Comprehensive form with validation (React Hook Form + Zod)
+  - Fields: Role (dropdown), Location, Description (min 10 chars), Salary Min/Max, Urgency (High/Low radio), Shift Type (dropdown), Number of Openings
+  - Success toast on submission, new job prepended to listings grid
+  - Dynamic job creation adds to local state
+- **View Applicants Modal**:
+  - Shows all candidates for selected job
+  - Each applicant card displays: name, email, phone, location, experience, skills badges
+  - Two CTAs per applicant: "View Profile" and "Schedule Call"
+- **Schedule Call Modal**:
+  - Date picker (min=today) and time picker
+  - Validation ensures both fields filled
+  - Success toast confirms scheduling with details
+- **Profile Tab**:
+  - **Business Information Card**: Brand name, business type, POC details, contact, address
+  - **Registration Details Card**: FSSAI license, GST number, PAN, registration number
+  - **Documents Card**: List of uploaded documents with view buttons
+  - Verification status badge: "Verification Complete" with checkmark
+- **Database Schemas**:
+  - `jobPostings` table: qsrId, role, location, description, salary range, urgency, shift type, openings, posted date, status
+  - `jobApplications` table: jobId, applicantId, applicant details, experience, skills, applied date, status
+  - `scheduledCalls` table: qsrId, applicantId, jobId, scheduled date/time, status, created date
+- **Current Implementation**:
+  - Mock data for initial jobs and applicants (ready for backend integration)
+  - All UI flows fully functional with state management
+  - Form validation prevents invalid submissions
+  - Toast notifications for all user actions
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
