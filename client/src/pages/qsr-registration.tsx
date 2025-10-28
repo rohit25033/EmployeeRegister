@@ -49,11 +49,11 @@ const qsrFormSchema = z.object({
   fssaiLicense: z.string().min(14, "Valid FSSAI license is required"),
   gstNumber: z.string().min(15, "Valid GST number is required"),
   panNumber: z.string().min(10, "Valid PAN is required"),
-  gstCertificateUrl: z.string().min(1, "GST certificate is required"),
-  fssaiCertificateUrl: z.string().min(1, "FSSAI certificate is required"),
-  businessRegistrationProofUrl: z.string().min(1, "Business registration proof is required"),
-  panCardUrl: z.string().min(1, "PAN card is required"),
-  bankAccountProofUrl: z.string().min(1, "Bank account proof is required"),
+  gstCertificateUrl: z.string().optional(),
+  fssaiCertificateUrl: z.string().optional(),
+  businessRegistrationProofUrl: z.string().optional(),
+  panCardUrl: z.string().optional(),
+  bankAccountProofUrl: z.string().optional(),
   fireSafetyCertificateUrl: z.string().optional(),
   municipalNocUrl: z.string().optional(),
   shopExteriorPhotoUrl: z.string().optional(),
@@ -476,14 +476,14 @@ export default function QSRRegistrationPage() {
                   <CardContent className="space-y-4">
                     {/* Required Documents */}
                     <div className="space-y-4">
-                      <h4 className="font-medium text-sm">Required Documents</h4>
+                      <h4 className="font-medium text-sm">Business Documents</h4>
                       
                       <FormField
                         control={qsrForm.control}
                         name="gstCertificateUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>GST Certificate *</FormLabel>
+                            <FormLabel>GST Certificate</FormLabel>
                             <FormControl>
                               <Input 
                                 type="file" 
@@ -503,7 +503,7 @@ export default function QSRRegistrationPage() {
                         name="fssaiCertificateUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>FSSAI Certificate *</FormLabel>
+                            <FormLabel>FSSAI Certificate</FormLabel>
                             <FormControl>
                               <Input 
                                 type="file" 
@@ -523,7 +523,7 @@ export default function QSRRegistrationPage() {
                         name="businessRegistrationProofUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Business Registration Proof *</FormLabel>
+                            <FormLabel>Business Registration Proof</FormLabel>
                             <FormDescription>Shop Act / Trade License / Udyam Registration</FormDescription>
                             <FormControl>
                               <Input 
@@ -544,7 +544,7 @@ export default function QSRRegistrationPage() {
                         name="panCardUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>PAN Card (Business/Owner) *</FormLabel>
+                            <FormLabel>PAN Card (Business/Owner)</FormLabel>
                             <FormControl>
                               <Input 
                                 type="file" 
@@ -564,7 +564,7 @@ export default function QSRRegistrationPage() {
                         name="bankAccountProofUrl"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Bank Account Proof *</FormLabel>
+                            <FormLabel>Bank Account Proof</FormLabel>
                             <FormDescription>Cancelled Cheque or Bank Statement</FormDescription>
                             <FormControl>
                               <Input 
