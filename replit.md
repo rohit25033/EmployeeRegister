@@ -6,6 +6,20 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
 
 ## Recent Changes (October 28, 2025)
 
+### Landing Page (Entry Point)
+- **Clean, Responsive Design**: First interaction point for both workers and employers
+- **Dual User Pathways**: 
+  - "I Want to Work" → Routes to `/employee-register` (worker registration flow)
+  - "I Want to Hire" → Routes to `/qsr-register` (employer registration placeholder)
+- **Professional Layout**: Header with QSRConnect branding, hero section with value proposition, visual illustration showing worker-restaurant connection
+- **Trust Indicators**: Featured brands (McDonald's, Starbucks, KFC, Domino's) for credibility
+- **Mobile-First Responsive**: Side-by-side CTAs on desktop, stacked on mobile
+- **Comprehensive Test Coverage**: All meaningful elements instrumented with data-testid attributes following project conventions
+- **Route Updates**: 
+  - Landing page now at root `/`
+  - Employee registration moved to `/employee-register`
+  - QSR placeholder at `/qsr-register` (coming soon)
+
 ### Employee Dashboard Feature (Tab 4)
 - **Conditional Dashboard Tab**: Appears automatically when a worker is selected for a job (status = "selected")
 - **Four Sub-tabs**: Calendar, Attendance, Documents, and Monthly Payslips for complete employee management
