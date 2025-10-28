@@ -13,10 +13,10 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary">
+              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary" data-testid="icon-logo">
                 <ChefHat className="w-6 h-6 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">QSRConnect</span>
+              <span className="text-xl font-bold text-foreground" data-testid="text-brand-name">QSRConnect</span>
             </div>
             <Button
               variant="ghost"
@@ -36,19 +36,19 @@ export default function LandingPage() {
         <div className="w-full max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6" data-testid="text-hero-headline">
               Connecting Restaurants with
               <br />
               <span className="text-primary">Reliable QSR Workers</span>
             </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-hero-subtext">
               Find verified staff or discover job opportunities with trusted brands.
             </p>
           </div>
 
           {/* Illustration/Banner Area */}
           <div className="mb-12 sm:mb-16 flex items-center justify-center">
-            <div className="relative w-full max-w-3xl h-48 sm:h-64 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full max-w-3xl h-48 sm:h-64 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 flex items-center justify-center overflow-hidden" data-testid="section-hero-illustration">
               {/* Decorative elements */}
               <div className="absolute top-8 left-12 w-16 h-16 rounded-full bg-primary/20 blur-xl"></div>
               <div className="absolute bottom-8 right-12 w-20 h-20 rounded-full bg-accent/30 blur-xl"></div>
@@ -85,10 +85,10 @@ export default function LandingPage() {
                   <UserCircle className="w-8 h-8 text-primary" />
                 </div>
                 <div className="space-y-3">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-worker-cta-heading">
                     I Want to Work
                   </h2>
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground" data-testid="text-worker-cta-subtext">
                     Find verified restaurant jobs near you.
                   </p>
                 </div>
@@ -119,10 +119,10 @@ export default function LandingPage() {
                   <Store className="w-8 h-8 text-primary" />
                 </div>
                 <div className="space-y-3">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-employer-cta-heading">
                     I Want to Hire
                   </h2>
-                  <p className="text-muted-foreground">
+                  <p className="text-muted-foreground" data-testid="text-employer-cta-subtext">
                     Hire verified staff for your restaurant or franchise.
                   </p>
                 </div>
@@ -146,12 +146,12 @@ export default function LandingPage() {
 
           {/* Trust Indicators */}
           <div className="mt-12 sm:mt-16 text-center">
-            <p className="text-sm text-muted-foreground mb-4">Trusted by leading QSR brands</p>
-            <div className="flex items-center justify-center gap-8 sm:gap-12 flex-wrap">
-              <span className="text-lg font-semibold text-muted-foreground/60">McDonald's</span>
-              <span className="text-lg font-semibold text-muted-foreground/60">Starbucks</span>
-              <span className="text-lg font-semibold text-muted-foreground/60">KFC</span>
-              <span className="text-lg font-semibold text-muted-foreground/60">Domino's</span>
+            <p className="text-sm text-muted-foreground mb-4" data-testid="text-trust-heading">Trusted by leading QSR brands</p>
+            <div className="flex items-center justify-center gap-8 sm:gap-12 flex-wrap" data-testid="list-trust-brands">
+              <span className="text-lg font-semibold text-muted-foreground/60" data-testid="text-brand-mcdonalds">McDonald's</span>
+              <span className="text-lg font-semibold text-muted-foreground/60" data-testid="text-brand-starbucks">Starbucks</span>
+              <span className="text-lg font-semibold text-muted-foreground/60" data-testid="text-brand-kfc">KFC</span>
+              <span className="text-lg font-semibold text-muted-foreground/60" data-testid="text-brand-dominos">Domino's</span>
             </div>
           </div>
         </div>
@@ -175,7 +175,7 @@ export default function LandingPage() {
                 Contact
               </a>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground" data-testid="text-copyright">
               © 2025 QSRConnect. All rights reserved.
             </p>
           </div>

@@ -11,7 +11,7 @@ export default function QSRRegisterPage() {
       <Card className="w-full max-w-2xl p-8 sm:p-12 text-center space-y-8">
         {/* Icon */}
         <div className="flex justify-center">
-          <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+          <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center" data-testid="icon-construction">
             <Construction className="w-10 h-10 text-primary" />
           </div>
         </div>
@@ -19,18 +19,18 @@ export default function QSRRegisterPage() {
         {/* Content */}
         <div className="space-y-4">
           <div className="flex items-center justify-center gap-2">
-            <Store className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+            <Store className="w-8 h-8 text-primary" data-testid="icon-store" />
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground" data-testid="text-page-heading">
               Employer Registration
             </h1>
           </div>
           
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
+          <p className="text-lg text-muted-foreground max-w-md mx-auto" data-testid="text-description">
             The employer registration workflow is coming soon! This section will allow restaurants and franchisees to register and hire verified staff.
           </p>
 
           <div className="pt-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/50 text-sm text-muted-foreground">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/50 text-sm text-muted-foreground" data-testid="badge-status">
               <Construction className="w-4 h-4" />
               Under Construction
             </div>
