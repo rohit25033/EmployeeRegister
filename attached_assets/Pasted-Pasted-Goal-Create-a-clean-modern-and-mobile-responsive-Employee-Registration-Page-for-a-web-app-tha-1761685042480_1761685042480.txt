@@ -1,0 +1,82 @@
+Pasted-Goal-Create-a-clean-modern-and-mobile-responsive-Employee-Registration-Page-for-a-web-app-that-co-1761685022398_1761685022399.txt
+Goal:
+Create a clean, modern, and mobile-responsive Employee Registration Page for a web app that connects QSR (Quick Service Restaurant) workers with verified jobs and payroll systems. The page should collect all necessary personal and professional details from the worker during sign-up.
+
+Design & Layout
+
+Use a multi-step form layout with progress indicator (like “Step 1 of 3”).
+
+Keep the design minimal, professional, and user-friendly, suitable for blue-collar users (clean icons, simple words, large buttons).
+
+Use neutral colors with accents (like orange or blue).
+
+Each section should have short helper text or placeholders for clarity.
+
+Use simple language labels like “Full Name” instead of “Applicant Name.”
+
+Form Sections
+🧍 Step 1: Basic Information
+
+Full Name (text)
+
+Age (number)
+
+Gender (dropdown: Male / Female / Other)
+
+Phone Number (with OTP verification placeholder)
+
+Email Address (optional)
+
+Password (with confirm password)
+
+Languages Known (multi-select dropdown)
+
+Region / City (dropdown or text input)
+
+💼 Step 2: Work & Skill Details
+
+Skills (multi-select dropdown — e.g., Cashier, Waiter, Kitchen Staff, Barista, Delivery, etc.)
+
+Past Work Details (text area — name of restaurant, role, duration)
+
+Upload Proof of Previous Work (file upload — payslips, experience letter; optional)
+
+Upload Video Introduction (file upload — optional)
+
+Placeholder text: “Introduce yourself in 30 seconds (optional)”
+
+Add Certification Tags (optional badges like ‘Belgian Waffle Certified’ — editable field)
+
+🪪 Step 3: Verification Details
+
+Aadhaar Card Number (masked input — ####-####-####)
+
+PAN Card Number (text input — optional)
+
+Upload ID Proof (file upload)
+
+Checkbox: “I agree to the Terms & Conditions and consent to data verification.” (required)
+
+Buttons & Navigation
+
+“Next” and “Back” buttons for step navigation
+
+Final button: “Create My Profile” (highlighted)
+
+On success → show confirmation message:
+
+“✅ Your registration is complete! Verification may take up to 24 hours. You’ll be notified once approved.”
+
+Technical & UI Notes
+
+Ensure form validation (e.g., Aadhaar number length, phone number format, required fields).
+
+Support image/video uploads (MP4, JPEG, PNG, PDF formats).
+
+Include a loading spinner and progress bar during upload.
+
+After successful registration, redirect to the Profile Dashboard page.
+
+Output Expectation
+
+Generate a fully functional frontend page for this registration flow, with clean UI/UX, form validations, and placeholder backend hooks (for data submission and verification).
