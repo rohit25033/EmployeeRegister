@@ -1,0 +1,145 @@
+Design and build a clean, mobile-friendly Home Page for QSR employees after they’ve completed registration and clicked “Okay, Got It” on the training popup.
+
+This page should have two main tabs — Home and Profile — allowing workers to browse jobs and view their personal details and verification status easily.
+
+🧭 Page Structure
+🔹 Top Navigation Tabs
+
+Fixed at the top of the page with large, easy-to-tap buttons:
+
+Home Tab: Displays available job openings with filters.
+
+Profile Tab: Displays the worker’s submitted details and verification progress.
+
+Active tab should be highlighted with the primary accent color.
+
+🏠 Tab 1: Home (Job Feed Page)
+Left Column: Filters (Sidebar)
+
+Title: “Filter Jobs”
+
+Each filter category should be collapsible or dropdown-style for mobile responsiveness.
+
+Filters include:
+
+Wages:
+
+Range slider or dropdown (e.g., ₹8,000–₹20,000 per month)
+
+Role:
+
+Checkboxes (Barista, Helper, Waiter, Cleaner, Kitchen Staff, Cashier)
+
+Shift Type:
+
+Morning, Evening, Night, Flexible
+
+At the bottom of the filter panel:
+
+Apply Filters button (primary, full-width)
+
+Clear All link (text style)
+
+Right Column: Job Listings
+
+Each Job Card should display:
+
+Restaurant / Brand Name
+
+Role Title
+
+Pay Rate (₹/month or ₹/hour)
+
+Shift Timing
+
+Location
+
+Small logo or placeholder image
+
+Apply Now button (prominent and easy to tap)
+
+Example:
+
+🍔 McDonald’s India  
+Role: Waiter  
+Pay: ₹12,000/month  
+Shift: Morning (9am–5pm)  
+📍 Bengaluru, Indiranagar  
+[Apply Now]
+
+On “Apply Now” Button Click:
+
+Show a modal popup (centered on screen):
+
+Popup Title:
+“Application Received!”
+
+Popup Body:
+“Our team will get back to you soon with next steps for this job.”
+
+Popup Button:
+“Okay, Got It” → closes popup (smooth fade animation)
+
+👤 Tab 2: Profile Page
+
+Title: “My Profile”
+
+Display all details the worker entered during registration in a simple card-style layout.
+
+Sections:
+
+Basic Information
+
+Full Name
+
+Age
+
+Gender
+
+Phone Number
+
+Email Address (if provided)
+
+Region / City
+
+Languages Known
+
+Work & Skill Details
+
+Skills
+
+Past Work Details
+
+Certifications (if any)
+
+Verification Status
+
+Aadhaar: Submitted ✅
+
+PAN: Optional
+
+ID Proof: Uploaded ✅
+
+Status: Verification Pending (show as orange or grey tag)
+
+Training & Certification Progress
+
+Training: Pending (grey progress bar or lock icon)
+
+Certification: Pending (grey progress bar or lock icon)
+
+At the bottom, show helper text:
+
+“Complete your verification, training, and certification to unlock better job matches.”
+
+⚙️ Technical & UI Notes
+
+Ensure tab switching works smoothly with simple animations.
+
+Filters dynamically update job listings (placeholder logic is fine).
+
+Include placeholders for backend integration (fetchJobs(), applyForJob(), getUserProfile()).
+
+Responsive for mobile and desktop layouts.
+
+Smooth transitions between pages and modals.

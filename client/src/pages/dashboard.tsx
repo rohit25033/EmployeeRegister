@@ -4,14 +4,21 @@ import { Button } from "@/components/ui/button";
 import ChecklistItem from "@/components/ChecklistItem";
 import ContactModal from "@/components/ContactModal";
 import { GraduationCap, Award } from "lucide-react";
+import { useLocation } from "wouter";
 
 export default function DashboardPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"training" | "certification">("training");
+  const [, setLocation] = useLocation();
 
   const handleOpenModal = (type: "training" | "certification") => {
     setModalType(type);
     setModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setLocation("/home");
   };
 
   return (
@@ -72,7 +79,7 @@ export default function DashboardPage() {
 
       <ContactModal
         isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={handleModalClose}
         type={modalType}
       />
     </div>

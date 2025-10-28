@@ -1,0 +1,187 @@
+import { useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import JobFilters, { type FilterState } from "@/components/JobFilters";
+import JobCard, { type Job } from "@/components/JobCard";
+import ProfileView from "@/components/ProfileView";
+import ApplicationModal from "@/components/ApplicationModal";
+
+const MOCK_JOBS: Job[] = [
+  {
+    id: "1",
+    restaurantName: "McDonald's India",
+    role: "Waiter",
+    payRate: "₹12,000/month",
+    shiftTiming: "Morning (9am–5pm)",
+    location: "Bengaluru, Indiranagar",
+  },
+  {
+    id: "2",
+    restaurantName: "Starbucks",
+    role: "Barista",
+    payRate: "₹15,000/month",
+    shiftTiming: "Evening (2pm–10pm)",
+    location: "Mumbai, Bandra",
+  },
+  {
+    id: "3",
+    restaurantName: "Domino's Pizza",
+    role: "Kitchen Staff",
+    payRate: "₹10,000/month",
+    shiftTiming: "Night (6pm–2am)",
+    location: "Delhi, Connaught Place",
+  },
+  {
+    id: "4",
+    restaurantName: "KFC India",
+    role: "Cashier",
+    payRate: "₹11,500/month",
+    shiftTiming: "Flexible",
+    location: "Pune, Koregaon Park",
+  },
+  {
+    id: "5",
+    restaurantName: "Cafe Coffee Day",
+    role: "Barista",
+    payRate: "₹13,000/month",
+    shiftTiming: "Morning (8am–4pm)",
+    location: "Hyderabad, HITEC City",
+  },
+  {
+    id: "6",
+    restaurantName: "Subway",
+    role: "Helper",
+    payRate: "₹9,500/month",
+    shiftTiming: "Evening (3pm–11pm)",
+    location: "Chennai, T Nagar",
+  },
+];
+
+const MOCK_PROFILE = {
+  fullName: 'Rajesh Kumar',
+  age: 24,
+  gender: 'Male',
+  phoneNumber: '9876543210',
+  email: 'rajesh@example.com',
+  region: 'Mumbai',
+  languagesKnown: ['Hindi', 'English', 'Marathi'],
+  skills: ['Baristas', 'Waiters'],
+  pastWorkDetails: 'Worked at Cafe Coffee Day for 2 years as a Barista',
+  certificationTags: ['Food Safety Certified'],
+  aadhaarNumber: '1234-5678-9012',
+  panNumber: 'ABCDE1234F',
+  verificationStatus: 'pending' as const,
+  trainingStatus: 'pending' as const,
+  certificationStatus: 'pending' as const,
+};
+
+export default function HomePage() {
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>(MOCK_JOBS);
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+
+  const handleApplyFilters = (filters: FilterState) => {
+    console.log("Applying filters:", filters);
+    let filtered = [...MOCK_JOBS];
+
+    if (filters.roles.length > 0) {
+      filtered = filtered.filter(job => filters.roles.includes(job.role));
+    }
+
+    if (filters.shifts.length > 0) {
+      filtered = filtered.filter(job => {
+        const shiftLower = job.shiftTiming.toLowerCase();
+        return filters.shifts.some(shift => shiftLower.includes(shift.toLowerCase()));
+      });
+    }
+
+    setFilteredJobs(filtered);
+  };
+
+  const handleClearFilters = () => {
+    console.log("Clearing filters");
+    setFilteredJobs(MOCK_JOBS);
+  };
+
+  const handleApplyJob = (jobId: string) => {
+    const job = MOCK_JOBS.find(j => j.id === jobId);
+    setSelectedJob(job || null);
+    setApplicationModalOpen(true);
+    console.log("Applying for job:", jobId);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="border-b sticky top-0 bg-background z-10">
+        <div className="max-w-7xl mx-auto px-4">
+          <Tabs defaultValue="home" className="w-full">
+            <TabsList className="w-full h-14 grid grid-cols-2 max-w-md mx-auto" data-testid="tabs-navigation">
+              <TabsTrigger 
+                value="home" 
+                className="h-12 text-base"
+                data-testid="tab-home"
+              >
+                Home
+              </TabsTrigger>
+              <TabsTrigger 
+                value="profile" 
+                className="h-12 text-base"
+                data-testid="tab-profile"
+              >
+                Profile
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="home" className="mt-0">
+              <div className="py-8">
+                <div className="grid grid-cols-12 gap-8">
+                  <div className="col-span-3">
+                    <JobFilters
+                      onApplyFilters={handleApplyFilters}
+                      onClearFilters={handleClearFilters}
+                    />
+                  </div>
+
+                  <div className="col-span-9">
+                    <div className="mb-6">
+                      <h2 className="text-2xl font-bold">Available Jobs</h2>
+                      <p className="text-muted-foreground">
+                        {filteredJobs.length} job{filteredJobs.length !== 1 ? 's' : ''} found
+                      </p>
+                    </div>
+
+                    <div className="space-y-4" data-testid="job-listings">
+                      {filteredJobs.length > 0 ? (
+                        filteredJobs.map((job) => (
+                          <JobCard key={job.id} job={job} onApply={handleApplyJob} />
+                        ))
+                      ) : (
+                        <div className="text-center py-12">
+                          <p className="text-muted-foreground">No jobs match your filters. Try adjusting them.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="profile" className="mt-0">
+              <div className="py-8">
+                <div className="max-w-3xl mx-auto">
+                  <h1 className="text-3xl font-bold mb-8">My Profile</h1>
+                  <ProfileView profile={MOCK_PROFILE} />
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+
+      <ApplicationModal
+        isOpen={applicationModalOpen}
+        onClose={() => setApplicationModalOpen(false)}
+        jobTitle={selectedJob ? `${selectedJob.role} at ${selectedJob.restaurantName}` : undefined}
+      />
+    </div>
+  );
+}
