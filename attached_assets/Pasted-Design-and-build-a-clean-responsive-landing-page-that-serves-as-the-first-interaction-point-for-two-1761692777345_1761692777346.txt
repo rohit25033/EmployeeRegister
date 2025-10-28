@@ -1,0 +1,88 @@
+Design and build a clean, responsive landing page that serves as the first interaction point for two types of users:
+
+Workers (Employees) — who want to find verified QSR jobs.
+
+Employers (QSRs / Franchisees) — who want to hire verified staff.
+
+This page directs each user type into their respective workflow.
+
+🧭 Page Structure
+Header
+
+Logo on top-left (placeholder: “QSRConnect”)
+
+Right side: optional “Help” or “Contact Us” link
+
+Main Section (Hero Area)
+
+Headline:
+“Connecting Restaurants with Reliable QSR Workers”
+
+Subtext:
+“Find verified staff or discover job opportunities with trusted brands.”
+
+Illustration or Banner Image:
+
+Friendly visual showing restaurant staff or a counter scene.
+
+Background: soft gradient or light texture.
+
+Call-to-Action (CTAs)
+
+Two large, clear CTAs at the center of the page (vertically stacked for mobile, side-by-side for desktop):
+
+🧑‍🍳 I Want to Work
+
+Subtext: “Find verified restaurant jobs near you.”
+
+Button Style: Primary (orange/blue accent)
+
+On Click → Redirects to the Employee Registration Flow
+(Connect this to the entire “Employee Workflow” you already built — Prompts 1 to 5.)
+
+🏢 I Want to Hire
+
+Subtext: “Hire verified staff for your restaurant or franchise.”
+
+Button Style: Secondary (outline or neutral tone)
+
+On Click → Redirects to the Employer (QSR/Franchisee) Registration Flow
+(Connect this to the flow we’re designing next — the QSR workflow.)
+
+Footer
+
+Simple footer with links:
+
+About | Privacy Policy | Terms of Use | Contact
+
+© 2025 QSRConnect (placeholder)
+
+⚙️ Technical & UI Notes
+
+Use smooth transition animations between landing → selected flow.
+
+Keep large text and icon-based buttons for easy use on mobile.
+
+Responsive layout (mobile-first).
+
+Placeholder navigation:
+
+/employee-register → for “I Want to Work”
+
+/qsr-register → for “I Want to Hire”
+
+Add preloader or small loading animation when switching routes.
+
+✅ Output Expectation
+
+Generate a fully functional landing page that:
+
+Clearly splits users into two roles: Worker / Employer
+
+Routes “I Want to Work” → Employee Registration Flow (Prompts 1–5)
+
+Routes “I Want to Hire” → QSR / Franchisee Registration Flow (Prompt upcoming)
+
+Uses a simple, friendly design suitable for both blue-collar and business users
+
+Responsive and production-ready
