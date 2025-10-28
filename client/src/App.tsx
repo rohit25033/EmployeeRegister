@@ -5,7 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import LandingPage from "@/pages/landing";
 import RegistrationPage from "@/pages/registration";
-import QSRRegisterPage from "@/pages/qsr-register";
+import QSROTPVerificationPage from "@/pages/qsr-otp-verification";
+import QSRRegistrationPage from "@/pages/qsr-registration";
 import DashboardPage from "@/pages/dashboard";
 import HomePage from "@/pages/home";
 import NotFound from "@/pages/not-found";
@@ -15,7 +16,8 @@ function Router() {
     <Switch>
       <Route path="/" component={LandingPage} />
       <Route path="/employee-register" component={RegistrationPage} />
-      <Route path="/qsr-register" component={QSRRegisterPage} />
+      <Route path="/qsr-register" component={QSROTPVerificationPage} />
+      <Route path="/qsr-registration" component={QSRRegistrationPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/home" component={HomePage} />
       <Route component={NotFound} />
