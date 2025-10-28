@@ -5,6 +5,7 @@ import JobCard, { type Job } from "@/components/JobCard";
 import ProfileView from "@/components/ProfileView";
 import ApplicationModal from "@/components/ApplicationModal";
 import AppliedJobCard, { type AppliedJob, type ApplicationStatus } from "@/components/AppliedJobCard";
+import EmployeeDashboard from "@/pages/employee-dashboard";
 
 const MOCK_JOBS: Job[] = [
   {
@@ -77,15 +78,12 @@ const MOCK_PROFILE = {
 
 const STATUSES: ApplicationStatus[] = ["under_review", "rejected", "interview_scheduled", "selected"];
 
-function getRandomStatus(): ApplicationStatus {
-  return STATUSES[Math.floor(Math.random() * STATUSES.length)];
-}
-
 export default function HomePage() {
   const [filteredJobs, setFilteredJobs] = useState<Job[]>(MOCK_JOBS);
   const [applicationModalOpen, setApplicationModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [appliedJobs, setAppliedJobs] = useState<AppliedJob[]>([]);
+  const [statusIndex, setStatusIndex] = useState(0);
 
   const handleApplyFilters = (filters: FilterState) => {
     console.log("Applying filters:", filters);
@@ -124,7 +122,7 @@ export default function HomePage() {
 
   const handleModalClose = () => {
     if (selectedJob) {
-      const status = getRandomStatus();
+      const status = STATUSES[statusIndex % STATUSES.length];
       const appliedJob: AppliedJob = {
         ...selectedJob,
         status,
@@ -132,6 +130,7 @@ export default function HomePage() {
       };
       
       setAppliedJobs(prev => [appliedJob, ...prev]);
+      setStatusIndex(prev => prev + 1);
     }
     
     setApplicationModalOpen(false);
@@ -142,12 +141,18 @@ export default function HomePage() {
     return appliedJobs.some(aj => aj.id === jobId);
   };
 
+  const hasSelectedJob = appliedJobs.some(job => job.status === "selected");
+  const hiredJob = appliedJobs.find(job => job.status === "selected");
+
   return (
     <div className="min-h-screen bg-background">
       <div className="border-b sticky top-0 bg-background z-10">
         <div className="max-w-7xl mx-auto px-4">
           <Tabs defaultValue="home" className="w-full">
-            <TabsList className="w-full h-14 grid grid-cols-3 max-w-2xl mx-auto" data-testid="tabs-navigation">
+            <TabsList 
+              className={`w-full h-14 grid ${hasSelectedJob ? 'grid-cols-4' : 'grid-cols-3'} max-w-3xl mx-auto`} 
+              data-testid="tabs-navigation"
+            >
               <TabsTrigger 
                 value="home" 
                 className="h-12 text-base"
@@ -169,6 +174,15 @@ export default function HomePage() {
               >
                 Applied Jobs
               </TabsTrigger>
+              {hasSelectedJob && (
+                <TabsTrigger 
+                  value="dashboard" 
+                  className="h-12 text-base"
+                  data-testid="tab-dashboard"
+                >
+                  Dashboard ✅
+                </TabsTrigger>
+              )}
             </TabsList>
 
             <TabsContent value="home" className="mt-0">
@@ -249,6 +263,12 @@ export default function HomePage() {
                 </div>
               </div>
             </TabsContent>
+
+            {hasSelectedJob && hiredJob && (
+              <TabsContent value="dashboard" className="mt-0">
+                <EmployeeDashboard selectedJob={hiredJob} />
+              </TabsContent>
+            )}
           </Tabs>
         </div>
       </div>

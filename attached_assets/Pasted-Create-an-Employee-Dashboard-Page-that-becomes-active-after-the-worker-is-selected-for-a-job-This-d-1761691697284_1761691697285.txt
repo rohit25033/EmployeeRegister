@@ -1,0 +1,86 @@
+Create an Employee Dashboard Page that becomes active after the worker is selected for a job.
+This dashboard allows the worker to manage their ongoing employment — track attendance, access payslips, view documents, and monitor milestones and rewards.
+
+🧭 Page Structure
+🔹 Top Navigation Tabs
+
+The Dashboard will now appear as a new main tab alongside the existing tabs:
+
+Home
+
+Profile
+
+Applied Jobs
+
+Dashboard ✅ (new)
+
+When the user is selected for a job (as per Prompt 4), this Dashboard tab becomes visible and accessible.
+
+🧩 Inside the Dashboard Tab
+
+The Dashboard will have sub-tabs displayed horizontally or as a side menu for mobile responsiveness:
+
+Calendar — Show work schedule, shifts, and attendance days marked visually.
+
+Attendance — Show attendance summary:
+
+Days Worked
+
+Days Absent
+
+Percentage of Attendance
+
+Documents — Section to upload/view ID proofs, contracts, offer letters, etc.
+
+Monthly Payslips — View or download monthly payslips (placeholder buttons for now).
+
+📆 Section 1: Calendar & Attendance Overview
+
+At the top of the dashboard, show a summary widget:
+
+“No. of Days Worked” → show as a bold number (e.g., “24 Days Worked”)
+
+Below it, add a simple text line: “Keep up the good work! Consistent attendance leads to bonuses.”
+
+Optional: Small calendar view or icon-based attendance tracker (e.g., ✅ for present, ❌ for absent).
+
+🏁 Section 2: Milestones Tracker
+
+Below the attendance section, show a Milestones Progress Bar or Timeline with the following stages:
+
+Onboarding → Marked as completed ✅
+
+6 Months → Upcoming milestone
+
+1 Year → Future milestone
+
+2 Years → Future milestone
+
+Each milestone can be represented by a card or timeline node with a date estimate (placeholder).
+
+🎁 Special Cue Card at 6-Month Milestone
+
+When hovering over or viewing the 6 Months milestone, show a reward cue card:
+
+🎉 Milestone Reward:
+“You’ll receive a ₹1,000 Amazon voucher when you complete 6 months!”
+
+This cue card should have a friendly illustration (like a gift box or confetti icon).
+
+📊 Section 3: Summary Area
+
+At the bottom or side of the Dashboard:
+
+Quick snapshot cards for:
+
+Current Job Role
+
+Restaurant / Employer Name
+
+Pay Rate
+
+Shift Timing
+
+Joining Date
+
+Use clean cards with icons for each metric.
