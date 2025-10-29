@@ -477,7 +477,7 @@ export default function QSRDashboardPage() {
             </div>
 
             {/* Recent Updates Section */}
-            <Card data-testid="section-recent-updates">
+            <Card className="bg-gradient-to-br from-accent/5 to-transparent" data-testid="section-recent-updates">
               <CardHeader>
                 <CardTitle>Recent Job Applications</CardTitle>
                 <CardDescription>Latest candidates who applied to your positions</CardDescription>

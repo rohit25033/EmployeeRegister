@@ -48,10 +48,10 @@ export default function LandingPage() {
 
           {/* Illustration/Banner Area */}
           <div className="mb-12 sm:mb-16 flex items-center justify-center">
-            <div className="relative w-full max-w-3xl h-48 sm:h-64 rounded-2xl bg-gradient-to-r from-primary/10 via-primary/5 to-accent/10 flex items-center justify-center overflow-hidden" data-testid="section-hero-illustration">
+            <div className="relative w-full max-w-3xl h-48 sm:h-64 rounded-2xl bg-gradient-to-r from-primary/10 via-accent/8 to-secondary/10 flex items-center justify-center overflow-hidden" data-testid="section-hero-illustration">
               {/* Decorative elements */}
               <div className="absolute top-8 left-12 w-16 h-16 rounded-full bg-primary/20 blur-xl"></div>
-              <div className="absolute bottom-8 right-12 w-20 h-20 rounded-full bg-accent/30 blur-xl"></div>
+              <div className="absolute bottom-8 right-12 w-20 h-20 rounded-full bg-secondary/30 blur-xl"></div>
               
               {/* Icon illustration */}
               <div className="flex items-center gap-8 sm:gap-12 relative z-10">
@@ -63,8 +63,8 @@ export default function LandingPage() {
                 </div>
                 <ArrowRight className="w-8 h-8 text-primary animate-pulse" />
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-accent/30 flex items-center justify-center">
-                    <Store className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-secondary/30 flex items-center justify-center">
+                    <Store className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
                   </div>
                   <span className="text-sm font-medium text-muted-foreground hidden sm:block">Restaurants</span>
                 </div>
@@ -76,7 +76,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
             {/* Worker CTA */}
             <Card
-              className="p-8 sm:p-10 hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 group"
+              className="p-8 sm:p-10 hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 group bg-gradient-to-br from-primary/5 to-transparent"
               onClick={() => setLocation("/employee-register")}
               data-testid="card-worker-cta"
             >
@@ -110,13 +110,13 @@ export default function LandingPage() {
 
             {/* Employer CTA */}
             <Card
-              className="p-8 sm:p-10 hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 group"
+              className="p-8 sm:p-10 hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 group bg-gradient-to-br from-secondary/5 to-transparent"
               onClick={() => setLocation("/qsr-register")}
               data-testid="card-employer-cta"
             >
               <div className="flex flex-col items-center text-center gap-6">
-                <div className="w-16 h-16 rounded-full bg-accent/30 flex items-center justify-center group-hover:bg-accent/40 transition-colors">
-                  <Store className="w-8 h-8 text-primary" />
+                <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                  <Store className="w-8 h-8 text-secondary" />
                 </div>
                 <div className="space-y-3">
                   <h2 className="text-2xl sm:text-3xl font-bold text-foreground" data-testid="text-employer-cta-heading">
@@ -128,7 +128,6 @@ export default function LandingPage() {
                 </div>
                 <Button
                   size="lg"
-                  variant="outline"
                   className="w-full gap-2 text-base"
                   data-testid="button-employer-register"
                   onClick={(e) => {
