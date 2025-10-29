@@ -4,6 +4,39 @@
 
 A web application connecting Quick Service Restaurant (QSR) workers with verified jobs and payroll systems. The platform provides a complete employee lifecycle management system, from registration through job applications and profile management. Built with a focus on accessibility and desktop-optimized design for blue-collar workers in the QSR industry.
 
+## Recent Changes (October 29, 2025)
+
+### QSR Registration Form Simplification
+- **Streamlined Form**: Removed document upload section and unnecessary business fields
+- **Reduced Fields**: Removed `registeredBusinessName`, `registrationNumber`, and all document upload inputs
+- **Two-Section Form**: 
+  - Section 1: Basic Information (brand name, POC details, address)
+  - Section 2: Business Details (FSSAI, GST, PAN only)
+  - Agreement & Consent checkboxes maintained
+- **Faster Registration**: Simplified flow improves onboarding speed for QSR owners
+- **Backend Ready**: Form validation and schema support backend integration
+
+### Employee Management Features (QSR Dashboard)
+- **New Employees Tab**: Added third tab to QSR dashboard header navigation
+- **Employee Cards Grid**: Three-column responsive layout displaying all hired employees
+  - Avatar with initials, name, role, location
+  - Email, phone, joining date
+  - Status badge (Active/On Leave)
+  - Attendance rate percentage
+  - "View Dashboard" CTA button
+- **Employee Dashboard Modal**: Comprehensive 4-tab employee detail view
+  - **Calendar Tab**: Work calendar showing days worked, attendance rate, 7-day visual grid
+  - **Attendance Tab**: Summary cards for days worked, days absent, attendance percentage
+  - **Documents Tab**: Employee document list (Aadhaar, PAN, ID, Offer Letter, Contract) with download buttons
+  - **Payslips Tab**: Monthly payslip history (October-July 2025) with download functionality
+- **Mock Employee Data**: 4 employees with varied roles (Waiter, Barista, Kitchen Staff, Cleaner) and attendance rates (92.3%, 95.2%, 100%, 80%)
+- **Support Integration**: "Reach Out to Us" floating button at bottom-right
+  - Modal with textarea for support query submission
+  - Contact information display (email, phone, support hours)
+  - Success toast notification on submission
+- **E2E Testing**: All employee management features verified working through comprehensive test suite
+- **Full Test Coverage**: data-testid attributes on all interactive and display elements
+
 ## Recent Changes (October 28, 2025)
 
 ### Landing Page (Entry Point)
