@@ -37,6 +37,9 @@ import {
   Building2,
   Shield,
   FileCheck,
+  MessageCircle,
+  Download,
+  X as XIcon,
 } from "lucide-react";
 import { format } from "date-fns";
 
@@ -135,6 +138,65 @@ const mockApplicants = [
   },
 ];
 
+const mockEmployees = [
+  {
+    id: "1",
+    name: "Rohan Singh",
+    role: "Waiter",
+    location: "McD Indiranagar",
+    email: "rohan@example.com",
+    phone: "9876543201",
+    joiningDate: "2025-05-15",
+    status: "active",
+    avatar: "RS",
+    daysWorked: 24,
+    daysAbsent: 2,
+    attendanceRate: 92.3,
+  },
+  {
+    id: "2",
+    name: "Neha Patel",
+    role: "Barista",
+    location: "McD Koramangala",
+    email: "neha@example.com",
+    phone: "9876543202",
+    joiningDate: "2025-06-01",
+    status: "active",
+    avatar: "NP",
+    daysWorked: 20,
+    daysAbsent: 1,
+    attendanceRate: 95.2,
+  },
+  {
+    id: "3",
+    name: "Vikram Reddy",
+    role: "Kitchen Staff",
+    location: "McD Whitefield",
+    email: "vikram@example.com",
+    phone: "9876543203",
+    joiningDate: "2025-07-10",
+    status: "active",
+    avatar: "VR",
+    daysWorked: 18,
+    daysAbsent: 0,
+    attendanceRate: 100,
+  },
+  {
+    id: "4",
+    name: "Ananya Iyer",
+    role: "Cleaner",
+    location: "McD HSR Layout",
+    email: "ananya@example.com",
+    phone: "9876543204",
+    joiningDate: "2025-08-20",
+    status: "on_leave",
+    avatar: "AI",
+    daysWorked: 12,
+    daysAbsent: 3,
+    attendanceRate: 80,
+  },
+];
+
 interface BusinessInfo {
   businessName: string;
   registeredName: string;
@@ -154,14 +216,18 @@ interface BusinessInfo {
 
 export default function QSRDashboardPage() {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState<"listings" | "profile">("listings");
+  const [activeTab, setActiveTab] = useState<"listings" | "profile" | "employees">("listings");
   const [postJobOpen, setPostJobOpen] = useState(false);
   const [viewApplicantsOpen, setViewApplicantsOpen] = useState(false);
   const [scheduleCallOpen, setScheduleCallOpen] = useState(false);
+  const [employeeDashboardOpen, setEmployeeDashboardOpen] = useState(false);
+  const [supportOpen, setSupportOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState<typeof mockJobs[0] | null>(null);
   const [selectedApplicant, setSelectedApplicant] = useState<typeof mockApplicants[0] | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<any | null>(null);
   const [scheduledDate, setScheduledDate] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
+  const [supportQuery, setSupportQuery] = useState("");
   const [jobs, setJobs] = useState(mockJobs);
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo | null>(null);
 
@@ -272,6 +338,15 @@ export default function QSRDashboardPage() {
               >
                 <FileText className="w-4 h-4" />
                 Listings
+              </Button>
+              <Button
+                variant={activeTab === "employees" ? "default" : "ghost"}
+                onClick={() => setActiveTab("employees")}
+                className="gap-2"
+                data-testid="button-tab-employees"
+              >
+                <Users className="w-4 h-4" />
+                Employees
               </Button>
               <Button
                 variant={activeTab === "profile" ? "default" : "ghost"}
@@ -410,6 +485,86 @@ export default function QSRDashboardPage() {
                   </Card>
                 ))}
               </div>
+            </div>
+          </div>
+        ) : activeTab === "employees" ? (
+          // Employees Tab
+          <div className="space-y-6" data-testid="section-employees">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold" data-testid="text-employees-heading">
+                  Employee Management
+                </h2>
+                <p className="text-muted-foreground" data-testid="text-employees-description">
+                  Manage your hired employees and view their performance
+                </p>
+              </div>
+              <Badge variant="outline" className="text-lg px-4 py-2" data-testid="badge-total-employees">
+                {mockEmployees.length} Active Employees
+              </Badge>
+            </div>
+
+            {/* Employee Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {mockEmployees.map((employee) => (
+                <Card key={employee.id} className="hover-elevate" data-testid={`card-employee-${employee.id}`}>
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                          <span className="text-sm font-semibold">{employee.avatar}</span>
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg" data-testid={`text-employee-name-${employee.id}`}>
+                            {employee.name}
+                          </CardTitle>
+                          <p className="text-sm text-muted-foreground">{employee.role}</p>
+                        </div>
+                      </div>
+                      <Badge variant={employee.status === "active" ? "default" : "outline"} data-testid={`badge-employee-status-${employee.id}`}>
+                        {employee.status === "active" ? "Active" : "On Leave"}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm">
+                      <MapPin className="w-4 h-4 text-muted-foreground" />
+                      <span>{employee.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Calendar className="w-4 h-4 text-muted-foreground" />
+                      <span>Joined: {new Date(employee.joiningDate).toLocaleDateString()}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Mail className="w-4 h-4 text-muted-foreground" />
+                      <span className="truncate">{employee.email}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm">
+                      <Phone className="w-4 h-4 text-muted-foreground" />
+                      <span>{employee.phone}</span>
+                    </div>
+                    
+                    <div className="pt-3 border-t space-y-2">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Attendance</span>
+                        <span className="font-semibold">{employee.attendanceRate}%</span>
+                      </div>
+                      <Button
+                        className="w-full gap-2"
+                        variant="outline"
+                        onClick={() => {
+                          setSelectedEmployee(employee);
+                          setEmployeeDashboardOpen(true);
+                        }}
+                        data-testid={`button-view-employee-dashboard-${employee.id}`}
+                      >
+                        <User className="w-4 h-4" />
+                        View Dashboard
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         ) : (
@@ -848,6 +1003,230 @@ export default function QSRDashboardPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Employee Dashboard Modal */}
+      <Dialog open={employeeDashboardOpen} onOpenChange={setEmployeeDashboardOpen}>
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden" data-testid="modal-employee-dashboard">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-sm font-semibold">{selectedEmployee?.avatar}</span>
+              </div>
+              {selectedEmployee?.name} - Employee Dashboard
+            </DialogTitle>
+            <DialogDescription>
+              {selectedEmployee?.role} at {selectedEmployee?.location}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <Tabs defaultValue="calendar" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="calendar" data-testid="tab-calendar">Calendar</TabsTrigger>
+              <TabsTrigger value="attendance" data-testid="tab-attendance">Attendance</TabsTrigger>
+              <TabsTrigger value="documents" data-testid="tab-documents">Documents</TabsTrigger>
+              <TabsTrigger value="payslips" data-testid="tab-payslips">Payslips</TabsTrigger>
+            </TabsList>
+            
+            <div className="overflow-y-auto max-h-[60vh] mt-4">
+              <TabsContent value="calendar" className="space-y-4" data-testid="content-calendar">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Work Calendar</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="text-center">
+                            <p className="text-3xl font-bold">{selectedEmployee?.daysWorked || 0}</p>
+                            <p className="text-sm text-muted-foreground">Days Worked</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardContent className="pt-6">
+                          <div className="text-center">
+                            <p className="text-3xl font-bold text-primary">{selectedEmployee?.attendanceRate || 0}%</p>
+                            <p className="text-sm text-muted-foreground">Attendance Rate</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    
+                    <div className="p-4 bg-muted/50 rounded-lg">
+                      <p className="text-sm font-medium mb-3">Last 7 Days</p>
+                      <div className="grid grid-cols-7 gap-2">
+                        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, idx) => (
+                          <div key={day} className="text-center">
+                            <p className="text-xs text-muted-foreground mb-1">{day}</p>
+                            <div className={`w-8 h-8 rounded-full mx-auto flex items-center justify-center ${idx < 5 ? 'bg-green-100 dark:bg-green-900' : 'bg-red-100 dark:bg-red-900'}`}>
+                              <span className="text-xs">{idx < 5 ? '✓' : '✗'}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="p-4 bg-primary/5 rounded-lg border">
+                      <p className="text-sm font-medium">Keep up the great work! 🎉</p>
+                      <p className="text-xs text-muted-foreground mt-1">Excellent attendance this week.</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+              
+              <TabsContent value="attendance" className="space-y-4" data-testid="content-attendance">
+                <div className="grid grid-cols-3 gap-4">
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-center">
+                        <p className="text-2xl font-bold">{selectedEmployee?.daysWorked || 0}</p>
+                        <p className="text-sm text-muted-foreground">Days Worked</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-destructive">{selectedEmployee?.daysAbsent || 0}</p>
+                        <p className="text-sm text-muted-foreground">Days Absent</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardContent className="pt-6">
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-primary">{selectedEmployee?.attendanceRate || 0}%</p>
+                        <p className="text-sm text-muted-foreground">Attendance Rate</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="documents" className="space-y-3" data-testid="content-documents">
+                {["Aadhaar Card", "PAN Card", "ID Proof", "Offer Letter", "Employment Contract"].map((doc) => (
+                  <Card key={doc}>
+                    <CardContent className="py-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <FileText className="w-5 h-5 text-muted-foreground" />
+                          <span className="font-medium">{doc}</span>
+                        </div>
+                        <Button variant="outline" size="sm" className="gap-2">
+                          <Download className="w-4 h-4" />
+                          Download
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </TabsContent>
+              
+              <TabsContent value="payslips" className="space-y-3" data-testid="content-payslips">
+                {["October 2025", "September 2025", "August 2025", "July 2025"].map((month) => (
+                  <Card key={month}>
+                    <CardContent className="py-4">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-medium">{month}</p>
+                          <p className="text-sm text-muted-foreground">Salary: ₹18,500</p>
+                        </div>
+                        <Button variant="outline" size="sm" className="gap-2">
+                          <Download className="w-4 h-4" />
+                          Download
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </TabsContent>
+            </div>
+          </Tabs>
+        </DialogContent>
+      </Dialog>
+
+      {/* Reach Out to Us Support Modal */}
+      <Dialog open={supportOpen} onOpenChange={setSupportOpen}>
+        <DialogContent data-testid="modal-support">
+          <DialogHeader>
+            <DialogTitle>Reach Out to Us</DialogTitle>
+            <DialogDescription>
+              Have questions or need help? Send us your query and we'll get back to you.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <Label htmlFor="support-query">Your Query *</Label>
+              <Textarea
+                id="support-query"
+                placeholder="Describe your issue or question..."
+                value={supportQuery}
+                onChange={(e) => setSupportQuery(e.target.value)}
+                className="mt-2 min-h-[120px]"
+                data-testid="textarea-support-query"
+              />
+            </div>
+            
+            <div className="p-3 bg-muted/50 rounded-lg">
+              <p className="text-xs text-muted-foreground">
+                📧 Email: support@qsrconnect.com<br />
+                📞 Phone: 1800-123-4567<br />
+                ⏰ Support Hours: Mon-Sat, 9 AM - 6 PM
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSupportOpen(false);
+                setSupportQuery("");
+              }}
+              data-testid="button-cancel-support"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={() => {
+                if (!supportQuery.trim()) {
+                  toast({
+                    title: "Query Required",
+                    description: "Please enter your query before submitting.",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+                
+                toast({
+                  title: "Query Submitted!",
+                  description: "We've received your query and will get back to you within 24 hours.",
+                });
+                setSupportOpen(false);
+                setSupportQuery("");
+              }}
+              data-testid="button-submit-support"
+            >
+              Submit Query
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Floating Support Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          size="lg"
+          className="rounded-full shadow-lg gap-2 h-14 px-6"
+          onClick={() => setSupportOpen(true)}
+          data-testid="button-floating-support"
+        >
+          <MessageCircle className="w-5 h-5" />
+          Reach Out to Us
+        </Button>
+      </div>
     </div>
   );
 }
