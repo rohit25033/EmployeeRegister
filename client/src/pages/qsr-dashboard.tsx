@@ -809,12 +809,14 @@ export default function QSRDashboardPage() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
+                        <SelectItem value="Barista">Barista</SelectItem>
                         <SelectItem value="Waiter">Waiter</SelectItem>
-                        <SelectItem value="Cashier">Cashier</SelectItem>
-                        <SelectItem value="Kitchen Staff">Kitchen Staff</SelectItem>
+                        <SelectItem value="Helper">Helper</SelectItem>
                         <SelectItem value="Cleaner">Cleaner</SelectItem>
+                        <SelectItem value="Cashier">Cashier</SelectItem>
+                        <SelectItem value="Cook">Cook</SelectItem>
                         <SelectItem value="Delivery Executive">Delivery Executive</SelectItem>
-                        <SelectItem value="Manager">Manager</SelectItem>
+                        <SelectItem value="Supervisor">Supervisor</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

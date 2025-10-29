@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Briefcase, UserCircle, ChefHat, Store, ArrowRight, HelpCircle } from "lucide-react";
+import { Briefcase, UserCircle, ChefHat, Store, ArrowRight, HelpCircle, Users } from "lucide-react";
 
 export default function LandingPage() {
   const [, setLocation] = useLocation();
@@ -36,40 +36,17 @@ export default function LandingPage() {
         <div className="w-full max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6" data-testid="text-hero-headline">
-              Connecting Restaurants with
-              <br />
-              <span className="text-primary">Reliable QSR Workers</span>
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
+              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-primary" data-testid="icon-blue-collar" />
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground" data-testid="text-hero-headline">
+                Empowering restaurants with
+                <br />
+                <span className="text-primary">Blue-collar talent</span>
+              </h1>
+            </div>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-hero-subtext">
               Find verified staff or discover job opportunities with trusted brands.
             </p>
-          </div>
-
-          {/* Illustration/Banner Area */}
-          <div className="mb-12 sm:mb-16 flex items-center justify-center">
-            <div className="relative w-full max-w-3xl h-48 sm:h-64 rounded-2xl bg-gradient-to-r from-primary/10 via-accent/8 to-secondary/10 flex items-center justify-center overflow-hidden" data-testid="section-hero-illustration">
-              {/* Decorative elements */}
-              <div className="absolute top-8 left-12 w-16 h-16 rounded-full bg-primary/20 blur-xl"></div>
-              <div className="absolute bottom-8 right-12 w-20 h-20 rounded-full bg-secondary/30 blur-xl"></div>
-              
-              {/* Icon illustration */}
-              <div className="flex items-center gap-8 sm:gap-12 relative z-10">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/20 flex items-center justify-center">
-                    <UserCircle className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
-                  </div>
-                  <span className="text-sm font-medium text-muted-foreground hidden sm:block">Workers</span>
-                </div>
-                <ArrowRight className="w-8 h-8 text-primary animate-pulse" />
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-secondary/30 flex items-center justify-center">
-                    <Store className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
-                  </div>
-                  <span className="text-sm font-medium text-muted-foreground hidden sm:block">Restaurants</span>
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Call-to-Action Cards */}
