@@ -1,0 +1,102 @@
+Extend the QSR Owner Home Dashboard by adding a comprehensive Employee Management view, where owners can:
+
+See all employees currently hired through Rozagaar Hub
+
+Click on any employee card to open their detailed dashboard (same view as the employee-side dashboard)
+
+Access help or raise queries via a “Reach Out to Us” section
+
+🧭 Dashboard Layout Overview
+Header
+
+Left: “👋 Hi McD!”
+
+Right: Tabs —
+
+Listings
+
+Profile
+
+Employees 👥 (new tab)
+
+The active tab (Employees) should be highlighted.
+
+👥 Employees Tab (Main Section)
+
+Display all active employees hired by the QSR in card view.
+
+Each Employee Card should show:
+
+Profile picture or avatar (default if unavailable)
+
+Full Name
+
+Job Role (e.g., Waiter, Kitchen Staff, Cleaner)
+
+Work Location (e.g., McD Koramangala)
+
+Joining Date
+
+Status tag (Active / On Leave / Under Training)
+
+“View Dashboard” button
+
+Example card:
+
+👷‍♂️  Rahul Verma
+Waiter - McD Indiranagar
+Joined: 12 Aug 2025
+Status: Active 🟢
+[View Dashboard]
+
+
+Cards should be clickable, and clicking anywhere or the button opens the Employee Dashboard View (see below).
+
+📊 On Clicking an Employee Card → Employee Dashboard View
+
+When the QSR owner clicks “View Dashboard,” it opens a mirror version of the employee’s dashboard — the same UI and data as the employee side (to maintain transparency).
+
+Include:
+
+Tabs: Calendar | Attendance | Documents | Monthly Payslips
+
+Number of working days
+
+Milestones:
+
+Onboarding
+
+6 Months 🎁 (with cue card: “₹1000 Amazon Voucher Reward”)
+
+1 Year
+
+2 Years
+
+Current progress status (e.g., 45/180 days completed toward 6 months milestone)
+
+🔹 This allows the employer to track employee performance, attendance, and document submissions seamlessly.
+
+💬 Reach Out to Us Section
+
+Add a help/support option at the bottom-right of the dashboard (floating button or footer CTA).
+
+Button Label: “💬 Reach Out to Us”
+
+On Click: Open a simple contact modal or side panel.
+
+Modal fields:
+
+Full Name (auto-filled from profile)
+
+Email / Phone
+
+Query Type (Dropdown: Technical Issue / Employee Query / Payment / Other)
+
+Message box
+
+Submit button
+
+After submission →
+Show confirmation toast:
+
+“✅ Your query has been received. Our support team will get back to you shortly.”

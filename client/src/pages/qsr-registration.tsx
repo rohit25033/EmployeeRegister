@@ -33,11 +33,10 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 
-// QSR Registration Schema
+// QSR Registration Schema - Simplified
 const qsrFormSchema = z.object({
   phoneNumber: z.string().min(10, "Phone number is required"),
   restaurantBrandName: z.string().min(1, "Restaurant/Brand name is required"),
-  registeredBusinessName: z.string().optional(),
   pocFullName: z.string().min(1, "POC name is required"),
   pocEmail: z.string().email("Valid email is required"),
   contactNumber: z.string().min(10, "Contact number is required"),
@@ -45,18 +44,9 @@ const qsrFormSchema = z.object({
   city: z.string().min(1, "City is required"),
   state: z.string().min(1, "State is required"),
   pincode: z.string().min(6, "Valid pincode is required"),
-  registrationNumber: z.string().min(1, "Registration number is required"),
   fssaiLicense: z.string().min(14, "Valid FSSAI license is required"),
   gstNumber: z.string().min(15, "Valid GST number is required"),
   panNumber: z.string().min(10, "Valid PAN is required"),
-  gstCertificateUrl: z.string().optional(),
-  fssaiCertificateUrl: z.string().optional(),
-  businessRegistrationProofUrl: z.string().optional(),
-  panCardUrl: z.string().optional(),
-  bankAccountProofUrl: z.string().optional(),
-  fireSafetyCertificateUrl: z.string().optional(),
-  municipalNocUrl: z.string().optional(),
-  shopExteriorPhotoUrl: z.string().optional(),
   detailsAccuracyConfirmed: z.literal(1, { errorMap: () => ({ message: "Please confirm accuracy" }) }),
   verificationConsent: z.literal(1, { errorMap: () => ({ message: "Please provide consent" }) }),
 });
@@ -99,7 +89,6 @@ export default function QSRRegistrationPage() {
     defaultValues: {
       phoneNumber: phoneNumber,
       restaurantBrandName: "",
-      registeredBusinessName: "",
       pocFullName: "",
       pocEmail: "",
       contactNumber: phoneNumber,
@@ -107,18 +96,9 @@ export default function QSRRegistrationPage() {
       city: "",
       state: "",
       pincode: "",
-      registrationNumber: "",
       fssaiLicense: "",
       gstNumber: "",
       panNumber: "",
-      gstCertificateUrl: "",
-      fssaiCertificateUrl: "",
-      businessRegistrationProofUrl: "",
-      panCardUrl: "",
-      bankAccountProofUrl: "",
-      fireSafetyCertificateUrl: "",
-      municipalNocUrl: "",
-      shopExteriorPhotoUrl: "",
     },
   });
 
@@ -155,7 +135,7 @@ export default function QSRRegistrationPage() {
     // Store business info for dashboard
     localStorage.setItem("qsrBusinessInfo", JSON.stringify({
       businessName: data.restaurantBrandName,
-      registeredName: data.registeredBusinessName || data.restaurantBrandName,
+      registeredName: data.restaurantBrandName,
       pocName: data.pocFullName,
       pocEmail: data.pocEmail,
       contactNumber: data.contactNumber,
@@ -166,7 +146,6 @@ export default function QSRRegistrationPage() {
       fssaiLicense: data.fssaiLicense,
       gstNumber: data.gstNumber,
       panNumber: data.panNumber,
-      registrationNumber: data.registrationNumber,
       accountType: "QSR Unit"
     }));
     
@@ -289,20 +268,6 @@ export default function QSRRegistrationPage() {
                             <FormLabel>Restaurant / Brand Name *</FormLabel>
                             <FormControl>
                               <Input placeholder="e.g., McDonald's India" {...field} data-testid="input-restaurant-brand-name" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="registeredBusinessName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Registered Business Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="If different from brand name" {...field} data-testid="input-registered-business-name" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -437,20 +402,6 @@ export default function QSRRegistrationPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={qsrForm.control}
-                        name="registrationNumber"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Restaurant Registration Number *</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Registration number" {...field} data-testid="input-registration-number" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
                         name="fssaiLicense"
                         render={({ field }) => (
                           <FormItem>
@@ -462,9 +413,106 @@ export default function QSRRegistrationPage() {
                           </FormItem>
                         )}
                       />
+                      
+                      <FormField
+                        control={qsrForm.control}
+                        name="gstNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>GST Number *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="15-character GST number" {...field} data-testid="input-gst-number" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={qsrForm.control}
+                        name="panNumber"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>PAN (Business/Owner) *</FormLabel>
+                            <FormControl>
+                              <Input placeholder="10-character PAN" {...field} data-testid="input-pan-number" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Section 3: Agreement & Consent */}
+                <Card data-testid="section-agreement-consent">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Shield className="w-5 h-5" />
+                      Section 3: Agreement & Consent
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <FormField
+                      control={qsrForm.control}
+                      name="detailsAccuracyConfirmed"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value === 1}
+                              onCheckedChange={(checked) => field.onChange(checked ? 1 : 0)}
+                              data-testid="checkbox-details-accuracy"
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                              I confirm that all provided details are accurate and verifiable. *
+                            </FormLabel>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={qsrForm.control}
+                      name="verificationConsent"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value === 1}
+                              onCheckedChange={(checked) => field.onChange(checked ? 1 : 0)}
+                              data-testid="checkbox-verification-consent"
+                            />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel>
+                              I authorize Rozagaar Hub to verify the provided information. *
+                            </FormLabel>
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button
+                      type="submit"
+                      className="w-full mt-6"
+                      size="lg"
+                      data-testid="button-submit-registration"
+                    >
+                      <CheckCircle2 className="w-4 h-4 mr-2" />
+                      Complete Registration
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Form>
+            </TabsContent>
                       <FormField
                         control={qsrForm.control}
                         name="gstNumber"
@@ -496,194 +544,7 @@ export default function QSRRegistrationPage() {
                   </CardContent>
                 </Card>
 
-                {/* Section 3: Document Uploads */}
-                <Card data-testid="section-document-uploads">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Upload className="w-5 h-5" />
-                      Section 3: Document Uploads
-                    </CardTitle>
-                    <CardDescription>
-                      Upload required business verification documents (PDF, PNG, or JPG)
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {/* Required Documents */}
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-sm">Business Documents</h4>
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="gstCertificateUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>GST Certificate</FormLabel>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("gstCertificateUrl", e.target.files)}
-                                data-testid="input-gst-certificate"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="fssaiCertificateUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>FSSAI Certificate</FormLabel>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("fssaiCertificateUrl", e.target.files)}
-                                data-testid="input-fssai-certificate"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="businessRegistrationProofUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Business Registration Proof</FormLabel>
-                            <FormDescription>Shop Act / Trade License / Udyam Registration</FormDescription>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("businessRegistrationProofUrl", e.target.files)}
-                                data-testid="input-business-registration-proof"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="panCardUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>PAN Card (Business/Owner)</FormLabel>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("panCardUrl", e.target.files)}
-                                data-testid="input-pan-card"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="bankAccountProofUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Bank Account Proof</FormLabel>
-                            <FormDescription>Cancelled Cheque or Bank Statement</FormDescription>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("bankAccountProofUrl", e.target.files)}
-                                data-testid="input-bank-account-proof"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    {/* Optional Documents */}
-                    <div className="space-y-4 pt-4 border-t">
-                      <h4 className="font-medium text-sm text-muted-foreground">Optional but Recommended</h4>
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="fireSafetyCertificateUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Fire Safety Certificate</FormLabel>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("fireSafetyCertificateUrl", e.target.files)}
-                                data-testid="input-fire-safety-certificate"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="municipalNocUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Municipal / Food Department NOC</FormLabel>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".pdf,.png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("municipalNocUrl", e.target.files)}
-                                data-testid="input-municipal-noc"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      
-                      <FormField
-                        control={qsrForm.control}
-                        name="shopExteriorPhotoUrl"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Shop Exterior Photo</FormLabel>
-                            <FormDescription>For physical verification</FormDescription>
-                            <FormControl>
-                              <Input 
-                                type="file" 
-                                accept=".png,.jpg,.jpeg"
-                                onChange={(e) => handleFileUpload("shopExteriorPhotoUrl", e.target.files)}
-                                data-testid="input-shop-exterior-photo"
-                              />
-                            </FormControl>
-                            {field.value && <p className="text-sm text-green-600">✓ File uploaded</p>}
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Section 4: Agreement & Consent */}
+                {/* Section 3: Agreement & Consent */}
                 <Card data-testid="section-agreement-consent">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
