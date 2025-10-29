@@ -36,14 +36,11 @@ export default function LandingPage() {
         <div className="w-full max-w-6xl mx-auto">
           {/* Hero Section */}
           <div className="text-center mb-12 sm:mb-16">
-            <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-primary" data-testid="icon-blue-collar" />
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground" data-testid="text-hero-headline">
-                Empowering restaurants with
-                <br />
-                <span className="text-primary">Blue-collar talent</span>
-              </h1>
-            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6" data-testid="text-hero-headline">
+              Empowering restaurants with
+              <br />
+              <span className="text-primary">Blue-collar talent</span>
+            </h1>
             <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto" data-testid="text-hero-subtext">
               Find verified staff or discover job opportunities with trusted brands.
             </p>
