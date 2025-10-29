@@ -40,6 +40,8 @@ import {
   MessageCircle,
   Download,
   X as XIcon,
+  Star,
+  ThumbsUp,
 } from "lucide-react";
 import { format } from "date-fns";
 
@@ -197,6 +199,50 @@ const mockEmployees = [
   },
 ];
 
+const mockFeedback: Record<string, Array<{
+  id: string;
+  rating: number;
+  comment: string;
+  date: string;
+  submittedBy: string;
+}>> = {
+  "1": [
+    {
+      id: "f1",
+      rating: 5,
+      comment: "Excellent service! Very polite and attentive to customers. Always maintains a positive attitude.",
+      date: "2025-10-15",
+      submittedBy: "McDonald's Indiranagar Manager",
+    },
+    {
+      id: "f2",
+      rating: 4,
+      comment: "Good work ethic. Handles rush hours well. Could improve on speed during peak times.",
+      date: "2025-09-20",
+      submittedBy: "McDonald's Indiranagar Manager",
+    },
+  ],
+  "2": [
+    {
+      id: "f3",
+      rating: 5,
+      comment: "Outstanding barista skills. Customers love her coffee and friendly demeanor.",
+      date: "2025-10-10",
+      submittedBy: "McDonald's Koramangala Manager",
+    },
+  ],
+  "3": [
+    {
+      id: "f4",
+      rating: 5,
+      comment: "Perfect attendance and excellent kitchen hygiene standards. A model employee!",
+      date: "2025-10-05",
+      submittedBy: "McDonald's Whitefield Manager",
+    },
+  ],
+  "4": [],
+};
+
 interface BusinessInfo {
   businessName: string;
   registeredName: string;
@@ -228,6 +274,9 @@ export default function QSRDashboardPage() {
   const [scheduledDate, setScheduledDate] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
   const [supportQuery, setSupportQuery] = useState("");
+  const [feedbackRating, setFeedbackRating] = useState(0);
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [employeeFeedback, setEmployeeFeedback] = useState(mockFeedback);
   const [jobs, setJobs] = useState(mockJobs);
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo | null>(null);
 
@@ -308,6 +357,49 @@ export default function QSRDashboardPage() {
     setScheduleCallOpen(false);
     setScheduledDate("");
     setScheduledTime("");
+  };
+
+  const handleSubmitFeedback = () => {
+    if (!selectedEmployee) return;
+    
+    if (feedbackRating === 0) {
+      toast({
+        title: "Rating Required",
+        description: "Please select a rating before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!feedbackComment.trim()) {
+      toast({
+        title: "Comment Required",
+        description: "Please provide feedback comments.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newFeedback = {
+      id: `f${Date.now()}`,
+      rating: feedbackRating,
+      comment: feedbackComment,
+      date: new Date().toISOString().split('T')[0],
+      submittedBy: businessInfo?.businessName || "QSR Manager",
+    };
+
+    setEmployeeFeedback(prev => ({
+      ...prev,
+      [selectedEmployee.id]: [newFeedback, ...(prev[selectedEmployee.id] || [])],
+    }));
+
+    toast({
+      title: "Feedback Submitted!",
+      description: `Your feedback for ${selectedEmployee.name} has been recorded.`,
+    });
+
+    setFeedbackRating(0);
+    setFeedbackComment("");
   };
 
   const totalApplications = jobs.reduce((acc, job) => acc + job.applicationsCount, 0);
@@ -1020,11 +1112,12 @@ export default function QSRDashboardPage() {
           </DialogHeader>
           
           <Tabs defaultValue="calendar" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="calendar" data-testid="tab-calendar">Calendar</TabsTrigger>
               <TabsTrigger value="attendance" data-testid="tab-attendance">Attendance</TabsTrigger>
               <TabsTrigger value="documents" data-testid="tab-documents">Documents</TabsTrigger>
               <TabsTrigger value="payslips" data-testid="tab-payslips">Payslips</TabsTrigger>
+              <TabsTrigger value="feedback" data-testid="tab-feedback">Feedback</TabsTrigger>
             </TabsList>
             
             <div className="overflow-y-auto max-h-[60vh] mt-4">
@@ -1140,6 +1233,119 @@ export default function QSRDashboardPage() {
                     </CardContent>
                   </Card>
                 ))}
+              </TabsContent>
+              
+              <TabsContent value="feedback" className="space-y-4" data-testid="content-feedback">
+                {/* Feedback Submission Form */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <ThumbsUp className="w-5 h-5" />
+                      Submit New Feedback
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label className="mb-2 block">Rating *</Label>
+                      <div className="flex gap-2">
+                        {[1, 2, 3, 4, 5].map((rating) => (
+                          <button
+                            key={rating}
+                            type="button"
+                            onClick={() => setFeedbackRating(rating)}
+                            className="transition-all"
+                            data-testid={`button-rating-${rating}`}
+                          >
+                            <Star
+                              className={`w-8 h-8 ${
+                                rating <= feedbackRating
+                                  ? 'fill-yellow-400 text-yellow-400'
+                                  : 'text-muted-foreground'
+                              }`}
+                            />
+                          </button>
+                        ))}
+                        {feedbackRating > 0 && (
+                          <span className="ml-2 text-sm text-muted-foreground self-center">
+                            {feedbackRating} out of 5 stars
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <Label htmlFor="feedback-comment">Comments *</Label>
+                      <Textarea
+                        id="feedback-comment"
+                        placeholder="Share your feedback about this employee's performance..."
+                        value={feedbackComment}
+                        onChange={(e) => setFeedbackComment(e.target.value)}
+                        className="mt-2 min-h-[100px]"
+                        data-testid="textarea-feedback-comment"
+                      />
+                    </div>
+                    
+                    <Button
+                      onClick={handleSubmitFeedback}
+                      className="w-full gap-2"
+                      data-testid="button-submit-feedback"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      Submit Feedback
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Feedback History */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Feedback History</CardTitle>
+                    <CardDescription>
+                      Previous feedback submitted for this employee
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {selectedEmployee && employeeFeedback[selectedEmployee.id]?.length > 0 ? (
+                      employeeFeedback[selectedEmployee.id].map((feedback) => (
+                        <Card key={feedback.id} data-testid={`card-feedback-${feedback.id}`}>
+                          <CardContent className="pt-4 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                  <Star
+                                    key={star}
+                                    className={`w-4 h-4 ${
+                                      star <= feedback.rating
+                                        ? 'fill-yellow-400 text-yellow-400'
+                                        : 'text-muted-foreground'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                              <Badge variant="outline" data-testid={`badge-feedback-date-${feedback.id}`}>
+                                {new Date(feedback.date).toLocaleDateString()}
+                              </Badge>
+                            </div>
+                            
+                            <p className="text-sm" data-testid={`text-feedback-comment-${feedback.id}`}>
+                              {feedback.comment}
+                            </p>
+                            
+                            <p className="text-xs text-muted-foreground">
+                              By: {feedback.submittedBy}
+                            </p>
+                          </CardContent>
+                        </Card>
+                      ))
+                    ) : (
+                      <div className="text-center py-8 text-muted-foreground" data-testid="text-no-feedback">
+                        <ThumbsUp className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                        <p>No feedback submitted yet</p>
+                        <p className="text-sm">Be the first to share feedback about this employee!</p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               </TabsContent>
             </div>
           </Tabs>
