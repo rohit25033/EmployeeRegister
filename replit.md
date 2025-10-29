@@ -6,6 +6,12 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
 
 ## Recent Updates (October 29, 2025)
 
+**Worker Verification & Certificate System**: Implemented comprehensive verification system for worker profiles. Workers can now achieve verified status through training completion and certificate obtainment. The system includes:
+- Schema fields: `isVerified`, `trainingCompleted`, `certificateObtained`, and `certificateUrl` in the employee registration table
+- Verification badges displayed throughout the platform: Recent Job Applications, View Applicants modal, and Employee Dashboard
+- Differentiation between verified and non-verified candidates in all candidate listings
+- Documents tab in Employee Dashboard showing verification status with visual indicators for Profile Verified, Training Completed, and Certificate Obtained
+
 **Employee Feedback System**: QSR owners can now submit and view performance feedback for employees through the Employee Dashboard modal. The Feedback tab includes a 5-star rating system with comment submission and complete feedback history display. All feedback is tracked with timestamps and submitter information.
 
 ## User Preferences
