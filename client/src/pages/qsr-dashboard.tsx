@@ -98,6 +98,9 @@ const mockRecentApplicants = [
     appliedTime: "2 hours ago",
     experience: "2 years in QSR",
     skills: ["Customer Service", "POS Systems"],
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
   {
     id: "2",
@@ -107,6 +110,9 @@ const mockRecentApplicants = [
     appliedTime: "1 day ago",
     experience: "3 years in food preparation",
     skills: ["Food Prep", "Hygiene Standards"],
+    isVerified: false,
+    trainingCompleted: false,
+    certificateObtained: false,
   },
 ];
 
@@ -119,6 +125,9 @@ const mockApplicants = [
     experience: "2 years in QSR",
     skills: ["Customer Service", "POS Systems", "Cash Handling"],
     location: "Bangalore",
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
   {
     id: "2",
@@ -128,6 +137,9 @@ const mockApplicants = [
     experience: "1 year in hospitality",
     skills: ["Customer Service", "Team Work"],
     location: "Bangalore",
+    isVerified: false,
+    trainingCompleted: true,
+    certificateObtained: false,
   },
   {
     id: "3",
@@ -137,6 +149,9 @@ const mockApplicants = [
     experience: "3 years in food service",
     skills: ["Customer Service", "Food Safety", "POS Systems"],
     location: "Bangalore",
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
 ];
 
@@ -154,6 +169,9 @@ const mockEmployees = [
     daysWorked: 24,
     daysAbsent: 2,
     attendanceRate: 92.3,
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
   {
     id: "2",
@@ -168,6 +186,9 @@ const mockEmployees = [
     daysWorked: 20,
     daysAbsent: 1,
     attendanceRate: 95.2,
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
   {
     id: "3",
@@ -182,6 +203,9 @@ const mockEmployees = [
     daysWorked: 18,
     daysAbsent: 0,
     attendanceRate: 100,
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
   {
     id: "4",
@@ -196,6 +220,9 @@ const mockEmployees = [
     daysWorked: 12,
     daysAbsent: 3,
     attendanceRate: 80,
+    isVerified: true,
+    trainingCompleted: true,
+    certificateObtained: true,
   },
 ];
 
@@ -494,9 +521,17 @@ export default function QSRDashboardPage() {
                         <User className="w-6 h-6 text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium" data-testid={`text-applicant-name-${applicant.id}`}>
-                          {applicant.name} applied for {applicant.role} - {applicant.location}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium" data-testid={`text-applicant-name-${applicant.id}`}>
+                            {applicant.name} applied for {applicant.role} - {applicant.location}
+                          </p>
+                          {applicant.isVerified && (
+                            <Badge variant="default" className="text-xs gap-1" data-testid={`badge-verified-${applicant.id}`}>
+                              <Shield className="w-3 h-3" />
+                              Verified
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-muted-foreground">{applicant.appliedTime}</p>
                         <div className="flex gap-2 mt-2">
                           {applicant.skills.map((skill, idx) => (
@@ -994,9 +1029,17 @@ export default function QSRDashboardPage() {
                         <User className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-semibold" data-testid={`text-applicant-detail-name-${applicant.id}`}>
-                          {applicant.name}
-                        </h4>
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-semibold" data-testid={`text-applicant-detail-name-${applicant.id}`}>
+                            {applicant.name}
+                          </h4>
+                          {applicant.isVerified && (
+                            <Badge variant="default" className="text-xs gap-1" data-testid={`badge-verified-applicant-${applicant.id}`}>
+                              <Shield className="w-3 h-3" />
+                              Verified
+                            </Badge>
+                          )}
+                        </div>
                         <p className="text-sm text-muted-foreground">{applicant.experience}</p>
                         
                         <div className="flex items-center gap-4 mt-2 text-sm">
@@ -1200,6 +1243,81 @@ export default function QSRDashboardPage() {
               </TabsContent>
               
               <TabsContent value="documents" className="space-y-3" data-testid="content-documents">
+                {/* Verification and Certificate Status */}
+                <Card className="bg-gradient-to-br from-primary/5 to-transparent">
+                  <CardHeader>
+                    <CardTitle className="text-base flex items-center gap-2">
+                      <Shield className="w-5 h-5 text-primary" />
+                      Verification & Training Status
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
+                      <div className="flex items-center gap-3">
+                        <Shield className={`w-5 h-5 ${selectedEmployee?.isVerified ? 'text-green-600' : 'text-muted-foreground'}`} />
+                        <div>
+                          <p className="font-medium text-sm">Profile Verified</p>
+                          <p className="text-xs text-muted-foreground">Background check completed</p>
+                        </div>
+                      </div>
+                      {selectedEmployee?.isVerified ? (
+                        <Badge variant="default" className="gap-1" data-testid="badge-verified-status">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Verified
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          Pending
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
+                      <div className="flex items-center gap-3">
+                        <FileCheck className={`w-5 h-5 ${selectedEmployee?.trainingCompleted ? 'text-green-600' : 'text-muted-foreground'}`} />
+                        <div>
+                          <p className="font-medium text-sm">Training Completed</p>
+                          <p className="text-xs text-muted-foreground">QSR service training program</p>
+                        </div>
+                      </div>
+                      {selectedEmployee?.trainingCompleted ? (
+                        <Badge variant="default" className="gap-1" data-testid="badge-training-status">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Completed
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          Not Started
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-background rounded-lg border">
+                      <div className="flex items-center gap-3">
+                        <FileCheck className={`w-5 h-5 ${selectedEmployee?.certificateObtained ? 'text-green-600' : 'text-muted-foreground'}`} />
+                        <div>
+                          <p className="font-medium text-sm">Certificate Obtained</p>
+                          <p className="text-xs text-muted-foreground">Official QSR certification</p>
+                        </div>
+                      </div>
+                      {selectedEmployee?.certificateObtained ? (
+                        <Badge variant="default" className="gap-1" data-testid="badge-certificate-status">
+                          <CheckCircle2 className="w-3 h-3" />
+                          Obtained
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          Not Obtained
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Employee Documents */}
                 {["Aadhaar Card", "PAN Card", "ID Proof", "Offer Letter", "Employment Contract"].map((doc) => (
                   <Card key={doc}>
                     <CardContent className="py-4">

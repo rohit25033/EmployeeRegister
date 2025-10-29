@@ -23,11 +23,18 @@ export const employeeRegistrations = pgTable("employee_registrations", {
   idProofUrl: text("id_proof_url").notNull(),
   termsAccepted: integer("terms_accepted").notNull(),
   status: text("status").notNull().default("pending"),
+  isVerified: integer("is_verified").notNull().default(0),
+  trainingCompleted: integer("training_completed").notNull().default(0),
+  certificateObtained: integer("certificate_obtained").notNull().default(0),
+  certificateUrl: text("certificate_url"),
 });
 
 export const insertEmployeeRegistrationSchema = createInsertSchema(employeeRegistrations).omit({
   id: true,
   status: true,
+  isVerified: true,
+  trainingCompleted: true,
+  certificateObtained: true,
 });
 
 export type InsertEmployeeRegistration = z.infer<typeof insertEmployeeRegistrationSchema>;
