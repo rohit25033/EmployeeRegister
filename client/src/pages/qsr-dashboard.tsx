@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -135,6 +135,23 @@ const mockApplicants = [
   },
 ];
 
+interface BusinessInfo {
+  businessName: string;
+  registeredName: string;
+  pocName: string;
+  pocEmail: string;
+  contactNumber: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  fssaiLicense?: string;
+  gstNumber?: string;
+  panNumber?: string;
+  registrationNumber?: string;
+  accountType: string;
+}
+
 export default function QSRDashboardPage() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<"listings" | "profile">("listings");
@@ -146,6 +163,15 @@ export default function QSRDashboardPage() {
   const [scheduledDate, setScheduledDate] = useState("");
   const [scheduledTime, setScheduledTime] = useState("");
   const [jobs, setJobs] = useState(mockJobs);
+  const [businessInfo, setBusinessInfo] = useState<BusinessInfo | null>(null);
+
+  // Load business info from localStorage
+  useEffect(() => {
+    const storedInfo = localStorage.getItem("qsrBusinessInfo");
+    if (storedInfo) {
+      setBusinessInfo(JSON.parse(storedInfo));
+    }
+  }, []);
 
   const postJobForm = useForm<PostJobFormData>({
     resolver: zodResolver(postJobSchema),
@@ -229,7 +255,7 @@ export default function QSRDashboardPage() {
             {/* Greeting */}
             <div>
               <h1 className="text-2xl font-bold" data-testid="text-greeting">
-                Hi, McD!
+                Hi, {businessInfo?.businessName || "QSR Owner"}!
               </h1>
               <p className="text-sm text-muted-foreground" data-testid="text-subtitle">
                 Welcome to your dashboard
@@ -406,24 +432,24 @@ export default function QSRDashboardPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label className="text-muted-foreground">Restaurant Brand Name</Label>
-                    <p className="font-medium mt-1" data-testid="text-brand-name">McDonald's India</p>
+                    <p className="font-medium mt-1" data-testid="text-brand-name">{businessInfo?.businessName || "N/A"}</p>
                   </div>
                   <div>
                     <Label className="text-muted-foreground">Business Type</Label>
-                    <p className="font-medium mt-1">Company-Owned</p>
+                    <p className="font-medium mt-1">{businessInfo?.accountType || "N/A"}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label className="text-muted-foreground">POC Name</Label>
-                    <p className="font-medium mt-1" data-testid="text-poc-name">John Smith</p>
+                    <p className="font-medium mt-1" data-testid="text-poc-name">{businessInfo?.pocName || "N/A"}</p>
                   </div>
                   <div>
                     <Label className="text-muted-foreground">POC Email</Label>
                     <p className="font-medium mt-1 flex items-center gap-2">
                       <Mail className="w-4 h-4 text-muted-foreground" />
-                      john@mcdonalds.com
+                      {businessInfo?.pocEmail || "N/A"}
                     </p>
                   </div>
                 </div>
@@ -432,7 +458,7 @@ export default function QSRDashboardPage() {
                   <Label className="text-muted-foreground">Contact Number</Label>
                   <p className="font-medium mt-1 flex items-center gap-2">
                     <Phone className="w-4 h-4 text-muted-foreground" />
-                    +91 9876543210
+                    {businessInfo?.contactNumber || "N/A"}
                   </p>
                 </div>
 
@@ -440,7 +466,7 @@ export default function QSRDashboardPage() {
                   <Label className="text-muted-foreground">Address</Label>
                   <p className="font-medium mt-1 flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
-                    123 Main Street, Mumbai, Maharashtra - 400001
+                    {businessInfo ? `${businessInfo.address}, ${businessInfo.city}, ${businessInfo.state} - ${businessInfo.pincode}` : "N/A"}
                   </p>
                 </div>
               </CardContent>
@@ -454,27 +480,35 @@ export default function QSRDashboardPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">FSSAI License</Label>
-                    <p className="font-medium mt-1" data-testid="text-fssai">12345678901234</p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">GST Number</Label>
-                    <p className="font-medium mt-1" data-testid="text-gst">22AAAAA0000A1Z5</p>
-                  </div>
-                </div>
+                {businessInfo?.accountType === "QSR Unit" ? (
+                  <>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label className="text-muted-foreground">FSSAI License</Label>
+                        <p className="font-medium mt-1" data-testid="text-fssai">{businessInfo?.fssaiLicense || "N/A"}</p>
+                      </div>
+                      <div>
+                        <Label className="text-muted-foreground">GST Number</Label>
+                        <p className="font-medium mt-1" data-testid="text-gst">{businessInfo?.gstNumber || "N/A"}</p>
+                      </div>
+                    </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-muted-foreground">PAN Number</Label>
-                    <p className="font-medium mt-1" data-testid="text-pan">ABCDE1234F</p>
-                  </div>
-                  <div>
-                    <Label className="text-muted-foreground">Registration Number</Label>
-                    <p className="font-medium mt-1">REG123456</p>
-                  </div>
-                </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label className="text-muted-foreground">PAN Number</Label>
+                        <p className="font-medium mt-1" data-testid="text-pan">{businessInfo?.panNumber || "N/A"}</p>
+                      </div>
+                      <div>
+                        <Label className="text-muted-foreground">Registration Number</Label>
+                        <p className="font-medium mt-1">{businessInfo?.registrationNumber || "N/A"}</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    Additional registration details will be requested during verification process.
+                  </p>
+                )}
               </CardContent>
             </Card>
 

@@ -76,7 +76,8 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
     - Phone number auto-filled and read-only (carried from OTP verification)
     - File upload inputs (mock implementation - ready for object storage integration)
     - Success toast notification on submission
-    - Auto-redirect to landing page after successful submission
+    - **Business data saved to localStorage** for dashboard access
+    - **Auto-redirect to QSR dashboard** (`/qsr-dashboard`) after successful submission
 - **Database Schemas**:
   - `qsrRegistrations` table: All business details, documents (nullable), consent fields, status tracking
   - `franchiseeRegistrations` table: Core business info, POC details, address, status tracking
@@ -86,11 +87,13 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
   - File upload system ready for object storage backend
   - Backend API routes pending for form submission and data persistence
   - Insert schemas exported from shared/schema.ts for type-safe backend integration
+  - **localStorage-based session management**: Registration data stored in `qsrBusinessInfo` key for immediate dashboard access
 
 ### QSR Owner Dashboard (Business Account Management)
 - **Full-Featured Dashboard** (`/qsr-dashboard`): Complete job management and applicant tracking system
+- **Session Management**: Loads business information from localStorage (`qsrBusinessInfo` key) on component mount
 - **Header Section**:
-  - Dynamic greeting ("Hi, McD!") based on logged-in business
+  - Dynamic greeting ("Hi, {businessName}!") based on registered business from localStorage
   - Icon-based tab navigation: Listings (default) and Profile
   - Clean, professional layout with active tab highlighting
 - **Listings Tab**:
@@ -114,8 +117,9 @@ A web application connecting Quick Service Restaurant (QSR) workers with verifie
   - Validation ensures both fields filled
   - Success toast confirms scheduling with details
 - **Profile Tab**:
-  - **Business Information Card**: Brand name, business type, POC details, contact, address
-  - **Registration Details Card**: FSSAI license, GST number, PAN, registration number
+  - Displays complete registration information from localStorage
+  - **Business Information Card**: Brand name, business type (QSR Unit/Franchisee Owner), POC details, contact, full address
+  - **Registration Details Card**: FSSAI license, GST number, PAN, registration number (shown for QSR Units; Franchisees see pending message)
   - **Documents Card**: List of uploaded documents with view buttons
   - Verification status badge: "Verification Complete" with checkmark
 - **Database Schemas**:

@@ -151,26 +151,60 @@ export default function QSRRegistrationPage() {
 
   const onQSRSubmit = async (data: QSRFormData) => {
     console.log("QSR Registration Data:", data);
+    
+    // Store business info for dashboard
+    localStorage.setItem("qsrBusinessInfo", JSON.stringify({
+      businessName: data.restaurantBrandName,
+      registeredName: data.registeredBusinessName || data.restaurantBrandName,
+      pocName: data.pocFullName,
+      pocEmail: data.pocEmail,
+      contactNumber: data.contactNumber,
+      address: data.restaurantAddress,
+      city: data.city,
+      state: data.state,
+      pincode: data.pincode,
+      fssaiLicense: data.fssaiLicense,
+      gstNumber: data.gstNumber,
+      panNumber: data.panNumber,
+      registrationNumber: data.registrationNumber,
+      accountType: "QSR Unit"
+    }));
+    
     toast({
-      title: "Registration Submitted!",
-      description: "Your QSR registration has been submitted for verification. We'll contact you within 24-48 hours.",
+      title: "Registration Successful!",
+      description: "Taking you to your dashboard...",
     });
     // TODO: Send to backend
     setTimeout(() => {
-      setLocation("/");
-    }, 2000);
+      setLocation("/qsr-dashboard");
+    }, 1500);
   };
 
   const onFranchiseeSubmit = async (data: FranchiseeFormData) => {
     console.log("Franchisee Registration Data:", data);
+    
+    // Store business info for dashboard
+    localStorage.setItem("qsrBusinessInfo", JSON.stringify({
+      businessName: data.franchiseeBusinessName,
+      registeredName: data.registeredCompanyName,
+      pocName: data.pocFullName,
+      pocEmail: data.pocEmail,
+      contactNumber: data.contactNumber,
+      address: data.businessAddress,
+      city: data.city,
+      state: data.state,
+      pincode: data.pincode,
+      accountType: "Franchisee Owner"
+    }));
+    
     toast({
-      title: "Registration Submitted!",
-      description: "Your franchisee registration has been submitted for verification. We'll contact you within 24-48 hours.",
+      title: "Registration Successful!",
+      description: "Taking you to your dashboard...",
     });
     // TODO: Send to backend
     setTimeout(() => {
-      setLocation("/");
-    }, 2000);
+      setLocation("/qsr-dashboard");
+    }, 1500);
   };
 
   const handleFileUpload = (fieldName: keyof QSRFormData, files: FileList | null) => {
