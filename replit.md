@@ -4,6 +4,10 @@
 
 A web application connecting Quick Service Restaurant (QSR) workers with verified jobs and payroll systems. The platform provides a complete employee lifecycle management system, from registration through job applications and profile management. It focuses on accessibility and a desktop-optimized design for blue-collar workers in the QSR industry. The platform aims to streamline worker onboarding, job application, and employer management processes, improving efficiency for both QSR owners and workers.
 
+## Recent Updates (October 29, 2025)
+
+**Employee Feedback System**: QSR owners can now submit and view performance feedback for employees through the Employee Dashboard modal. The Feedback tab includes a 5-star rating system with comment submission and complete feedback history display. All feedback is tracked with timestamps and submitter information.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
